@@ -16,8 +16,6 @@ RUN apk add --no-cache -t build-dependencies git make gcc g++ python libtool aut
 # Turn down the verbosity to default level.
 ENV NPM_CONFIG_LOGLEVEL warn
 
-USER app
-
 # Create a folder named function
 RUN mkdir -p /home/app
 
@@ -51,12 +49,12 @@ ENV read_timeout="15s"
 ENV prefix_logs="false"
 
 # Service-Based Enviroment Variables
-ENV SERVICE_NAME="tmsService"
+ENV SERVICE_NAME="transaction-monitoring-service"
 ENV NODE_ENV="prod"
 ENV REST_PORT=3000
 ENV GRPC_PORT=50051
 
-ENV NIFI_HOST="new-new-nifi.frm"
+ENV NIFI_HOST="frm-nifi.frm"
 ENV NIFI_PORT=50051
 
 ENV LOGSTASH_HOST=127.0.0.1
