@@ -6,6 +6,7 @@ import NiFi from './services/nifi';
 import { LoggerService } from './utils';
 import App from './app';
 import { config } from './config';
+import apm from 'elastic-apm-node';
 
 export const runServer = (): void => {
   // https://github.com/grpc/grpc/issues/6976
@@ -19,6 +20,16 @@ export const runServer = (): void => {
    * KOA Rest Server
    */
   const app = new App();
+
+  if (config.apmLogging) {
+    apm.start({
+      serviceName: config.serviceName,
+      secretToken: config.apmSecretToken,
+      serverUrl: config.apmURL,
+      usePathAsTransactionName: true,
+      active: config.apmLogging,
+    });
+  }
 
   /**
    * gRPC Server
@@ -56,7 +67,6 @@ process.on('unhandledRejection', (err) => {
 
 try {
   runServer();
-}
-catch (err) {
+} catch (err) {
   LoggerService.error('Error while starting gRPC server', err);
 }

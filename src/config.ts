@@ -17,6 +17,9 @@ const config: IConfig = {
   nifiPort: parseInt(process.env.NIFI_PORT!, 10) || 3000,
   logstashHost: <string>process.env.LOGSTASH_HOST,
   logstashPort: parseInt(process.env.LOGSTASH_PORT!, 10),
+  apmLogging: <boolean>(process.env.APM_LOGGING === 'true'),
+  apmSecretToken: <string>process.env.APM_SECRET_TOKEN,
+  apmURL: <string>process.env.APM_URL,
 };
 
 export { config };

@@ -7,4 +7,7 @@ export interface IConfig {
   nifiPort: number;
   logstashHost: string;
   logstashPort: number;
+  apmLogging: boolean;
+  apmSecretToken: string;
+  apmURL: string;
 }
