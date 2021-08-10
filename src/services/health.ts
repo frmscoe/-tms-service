@@ -8,6 +8,7 @@ const healthStatus: Map<string, HealthCheckResponse.ServingStatus> = new Map(
   Object.entries({
     '': ServingStatus.SERVING,
     tmsService: ServingStatus.SERVING,
+    'transaction-monitoring-service': ServingStatus.SERVING,
   }),
 );
 
