@@ -5,9 +5,8 @@ import { nifiService } from '../clients/nifi';
 import apm from 'elastic-apm-node';
 
 export const monitorQuote = async (ctx: Context): Promise<Context> => {
+  const span = apm.startSpan('TMS initiated gRPC request for monitorQuote');
   try {
-    const span = apm.startSpan('execute');
-
     const reqData = ctx.request.body as Record<string, unknown>;
     reqData.TransactionType = 'pain.001.001.11';
     const param: FlowFileRequest = new FlowFileRequest();
@@ -19,6 +18,9 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
 
     span?.end();
   } catch (error) {
+    apm?.setSpanOutcome('failure');
+    span?.end();
+
     LoggerService.log(error as string);
     ctx.status = 500;
     ctx.body = {
@@ -30,9 +32,8 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
 };
 
 export const monitorTransfer = async (ctx: Context): Promise<Context> => {
+  const span = apm.startSpan('TMS initiated gRPC request for monitorTransfer');
   try {
-    const span = apm.startSpan('transfer');
-
     const reqData = ctx.request.body as Record<string, unknown>;
     const param: FlowFileRequest = new FlowFileRequest();
     reqData.TransactionType = 'pacs.008.001.10';
@@ -45,6 +46,9 @@ export const monitorTransfer = async (ctx: Context): Promise<Context> => {
 
     span?.end();
   } catch (error) {
+    apm?.setSpanOutcome('failure');
+    span?.end();
+
     LoggerService.log(error as string);
     ctx.status = 500;
     ctx.body = {
