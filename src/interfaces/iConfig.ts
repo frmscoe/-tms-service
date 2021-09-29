@@ -1,6 +1,6 @@
 export interface IConfig {
   functionName: string;
-  dev: string;
+  nodeEnv: string;
   restport: number;
   grpcport: number;
   dataPreparationHost: string;

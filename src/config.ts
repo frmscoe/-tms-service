@@ -10,7 +10,7 @@ dotenv({
 
 const config: IConfig = {
   functionName: <string>process.env.FUNCTION_NAME,
-  dev: <string>process.env.NODE_ENV,
+  nodeEnv: <string>process.env.NODE_ENV,
   restport: parseInt(process.env.REST_PORT!, 10) || 3000,
   grpcport: parseInt(process.env.GRPC_PORT!, 10) || 50051,
   dataPreparationHost: process.env.DATA_PREPARATION_HOST!,

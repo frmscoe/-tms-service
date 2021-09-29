@@ -2,7 +2,10 @@
 
 import axios from 'axios';
 import { Context } from 'koa';
+import path from 'path';
 import { monitorQuote, monitorTransfer } from '../../src/controllers/execute';
+
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
 const getMockRequest = () => {
   return JSON.parse(
