@@ -9,12 +9,12 @@ dotenv({
 });
 
 const config: IConfig = {
-  serviceName: <string>process.env.SERVICE_NAME,
+  functionName: <string>process.env.FUNCTION_NAME,
   dev: <string>process.env.NODE_ENV,
   restport: parseInt(process.env.REST_PORT!, 10) || 3000,
   grpcport: parseInt(process.env.GRPC_PORT!, 10) || 50051,
-  nifiHost: process.env.NIFI_HOST!,
-  nifiPort: parseInt(process.env.NIFI_PORT!, 10) || 3000,
+  dataPreparationHost: process.env.DATA_PREPARATION_HOST!,
+  dataPreparationPort: parseInt(process.env.DATA_PREPARATION_PORT!, 10) || 3000,
   logstashHost: <string>process.env.LOGSTASH_HOST,
   logstashPort: parseInt(process.env.LOGSTASH_PORT!, 10),
   apmLogging: <boolean>(process.env.APM_LOGGING === 'true'),

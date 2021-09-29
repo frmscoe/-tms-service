@@ -49,19 +49,18 @@ ENV read_timeout="15s"
 ENV prefix_logs="false"
 
 # Service-Based Enviroment Variables
-ENV SERVICE_NAME="transaction-monitoring-service"
+ENV FUNCTION_NAME="transaction-monitoring-service"
 ENV NODE_ENV="prod"
 ENV REST_PORT=3000
 ENV GRPC_PORT=50051
 
-ENV NIFI_HOST="frm-nifi.frm"
-ENV NIFI_PORT=50051
+ENV DATA_PREPARATION_HOST="frm-nifi.frm"
+ENV DATA_PREPARATION_PORT=50051
 
 ENV LOGSTASH_HOST=127.0.0.1
 ENV LOGSTASH_PORT=3000
 
 ENV APM_LOGGING=true
-ENV APM_SERVICE_NAME=transaction-monitoring-service
 ENV APM_URL=http://apm-server-apm-server.frm:8200
 ENV APM_SECRET_TOKEN=
 
