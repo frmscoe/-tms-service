@@ -20,7 +20,7 @@ export const runServer = (): void => {
    */
   const app = new App();
 
-  app.listen(config.restport, () => {
+  app.listen(3001, () => {
     LoggerService.log(`API restServer listening on PORT ${config.restport}`);
   });
 };

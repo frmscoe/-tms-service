@@ -5,7 +5,7 @@ import { Context } from 'koa';
 import path from 'path';
 import { monitorQuote, monitorTransfer } from '../../src/controllers/execute';
 
-require('dotenv').config({ path: path.resolve(__dirname, './.env') });
+// require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
 const getMockRequest = () => {
   return JSON.parse(
@@ -47,18 +47,13 @@ describe('Logic Service', () => {
 
       const expectedReq = getMockRequest();
       const ctx = { request: { body: expectedReq } };
-
       const result = await monitorTransfer(ctx as Context);
-
       expect(result.status).toEqual(200);
     });
 
     it('should handle unsuccessful Transfer', async () => {
-      const expectedReq = getMockRequest();
       const ctx = { request: { body: '' } };
-
       const result = await monitorTransfer(ctx as Context);
-
       expect(result.status).toEqual(500);
     });
   });

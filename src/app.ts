@@ -22,25 +22,25 @@ class App extends Koa {
   }
 
   configureMiddlewares(): void {
-    const readSwagger = swagger.loadDocumentSync(path.join(__dirname, 'mojaloop-api.yaml'));
-    const swaggerDocument: swagger.Document = readSwagger as swagger.Document;
-    this.use(ui(swaggerDocument, '/swagger'));
-    this.use(validate(swaggerDocument));
+    // const readSwagger = swagger.loadDocumentSync(path.join(__dirname, 'mojaloop-api.yaml'));
+    // const swaggerDocument: swagger.Document = readSwagger as swagger.Document;
+    // this.use(ui(swaggerDocument, '/swagger'));
+    // this.use(validate(swaggerDocument));
 
     // LoggerService Middleware
-    this.use(async (ctx, next) => {
-      await next();
-      const rt = ctx.response.get('X-Response-Time');
-      LoggerService.log(`${ctx.method} ${ctx.url} - ${rt}`);
+    this.use(function* (next) {
+      yield next;
+      console.log('test');
     });
 
     // x-response-time
-    this.use(async (ctx, next) => {
-      const start = Date.now();
-      await next();
-      const ms = Date.now() - start;
-      ctx.set('X-Response-Time', `${ms}ms`);
-    });
+    // this.use(async (ctx, next) => {
+    //   const start = Date.now();
+    //   await next();
+    //   const ms = Date.now() - start;
+    //   ctx.set('SOME-TEST-HEADER', `${ms}ms`);
+    //   ctx.body = 'some response';
+    // });
   }
 
   configureRoutes(): void {

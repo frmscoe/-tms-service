@@ -21,17 +21,16 @@
     "build": "tsc --project tsconfig.json",
     "start": "node build/server",
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
-    "cleanup": "rm -rf build template jest.config.js jest.config.js.map node_modules yarn.lock",
-    "fix": "yarn fix:prettier && yarn fix:eslint",
+    "fix": "npm run fix:prettier && npm run fix:eslint",
     "fix:eslint": "eslint --fix \"**/*.ts\"",
     "fix:prettier": "prettier --write \"**/*.ts\"",
-    "lint": "yarn lint:eslint && yarn lint:prettier",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:eslint": "eslint \"**/*.ts\"",
     "lint:prettier": "prettier --check \"**/*.ts\"",
     "test": "jest --config=jest.config.ts --passWithNoTests",
     "test:watch": "jest --config=jest.config.ts --watch",
-    "test:unit": "yarn test ./__tests__/units",
-    "test:integration": "yarn test ./__tests__/integrations --detectOpenHandles"
+    "test:unit": "npm run test ./__tests__/units",
+    "test:integration": "npm run test ./__tests__/integrations --detectOpenHandles"
   },
   "dependencies": {
     "@log4js-node/logstash-http": "^1.1.0",
