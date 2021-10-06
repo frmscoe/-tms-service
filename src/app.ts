@@ -13,7 +13,6 @@ class App extends Koa {
 
   constructor() {
     super();
-
     // bodyparser needs to be loaded first in order to work - in fact, order for all the below is very import!
     this.servers = [];
     this.use(bodyParser());
@@ -22,25 +21,23 @@ class App extends Koa {
   }
 
   configureMiddlewares(): void {
-    // const readSwagger = swagger.loadDocumentSync(path.join(__dirname, 'mojaloop-api.yaml'));
-    // const swaggerDocument: swagger.Document = readSwagger as swagger.Document;
-    // this.use(ui(swaggerDocument, '/swagger'));
-    // this.use(validate(swaggerDocument));
+    const readSwagger = swagger.loadDocumentSync(path.join(__dirname, 'mojaloop-api.yaml'));
+    const swaggerDocument: swagger.Document = readSwagger as swagger.Document;
+    this.use(ui(swaggerDocument, '/swagger'));
+    this.use(validate(swaggerDocument));
 
     // LoggerService Middleware
     this.use(function* (next) {
       yield next;
-      console.log('test');
     });
 
-    // x-response-time
-    // this.use(async (ctx, next) => {
-    //   const start = Date.now();
-    //   await next();
-    //   const ms = Date.now() - start;
-    //   ctx.set('SOME-TEST-HEADER', `${ms}ms`);
-    //   ctx.body = 'some response';
-    // });
+    // x - response - time
+    this.use(async (ctx, next) => {
+      const start = Date.now();
+      await next();
+      const ms = Date.now() - start;
+      ctx.set('x-response-time', `${ms}ms`);
+    });
   }
 
   configureRoutes(): void {

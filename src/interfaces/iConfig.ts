@@ -1,10 +1,10 @@
 export interface IConfig {
   functionName: string;
   nodeEnv: string;
-  restport: number;
-  grpcport: number;
-  dataPreparationHost: string;
-  dataPreparationPort: number;
+  restPort: number;
+  dataPreparationUrl: string;
+  dataPreparationUsername: string;
+  dataPreparationPassword: string;
   logstashHost: string;
   logstashPort: number;
   apmLogging: boolean;

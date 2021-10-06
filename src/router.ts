@@ -9,7 +9,7 @@ const router = new Router();
 router.get('/health', healthCheck);
 
 // execute the service
-// router.post('/execute', monitorQuote);
-// router.post('/transfer', monitorTransfer);
+router.post('/execute', monitorQuote);
+router.post('/transfer', monitorTransfer);
 
 export default router;

@@ -4,7 +4,9 @@ import { config } from '../config';
 import axios from 'axios';
 
 const sendDataPreparationRequest = async (toSend: Record<string, unknown>) => {
-  const dataPrepResponse = await axios.post(`${config.dataPreparationHost}:${config.dataPreparationPort}`, toSend);
+  const dataPrepResponse = await axios.post(`${config.dataPreparationUrl}`, toSend, {
+    auth: { username: config.dataPreparationUsername, password: config.dataPreparationPassword },
+  });
   if (dataPrepResponse.status !== 200) {
     LoggerService.error(dataPrepResponse.data);
   }
