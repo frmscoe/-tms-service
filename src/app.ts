@@ -13,7 +13,6 @@ class App extends Koa {
 
   constructor() {
     super();
-
     // bodyparser needs to be loaded first in order to work - in fact, order for all the below is very import!
     this.servers = [];
     this.use(bodyParser());
@@ -28,18 +27,16 @@ class App extends Koa {
     this.use(validate(swaggerDocument));
 
     // LoggerService Middleware
-    this.use(async (ctx, next) => {
-      await next();
-      const rt = ctx.response.get('X-Response-Time');
-      LoggerService.log(`${ctx.method} ${ctx.url} - ${rt}`);
+    this.use(function* (next) {
+      yield next;
     });
 
-    // x-response-time
+    // x - response - time
     this.use(async (ctx, next) => {
       const start = Date.now();
       await next();
       const ms = Date.now() - start;
-      ctx.set('X-Response-Time', `${ms}ms`);
+      ctx.set('x-response-time', `${ms}ms`);
     });
   }
 

@@ -1,10 +1,10 @@
 export interface IConfig {
-  serviceName: string;
-  dev: string;
-  restport: number;
-  grpcport: number;
-  nifiHost: string;
-  nifiPort: number;
+  functionName: string;
+  nodeEnv: string;
+  restPort: number;
+  dataPreparationUrl: string;
+  dataPreparationUsername: string;
+  dataPreparationPassword: string;
   logstashHost: string;
   logstashPort: number;
   apmLogging: boolean;

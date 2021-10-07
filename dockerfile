@@ -11,8 +11,6 @@ RUN addgroup -S app && adduser -S -g app app
 
 RUN apk --no-cache add curl ca-certificates
 
-RUN apk add --no-cache -t build-dependencies git make gcc g++ python libtool autoconf automake yarn
-
 # Turn down the verbosity to default level.
 ENV NPM_CONFIG_LOGLEVEL warn
 
@@ -23,18 +21,17 @@ RUN mkdir -p /home/app
 WORKDIR /home/app
 
 COPY ./package.json ./
-COPY ./yarn.lock ./
+COPY ./package-lock.json ./
 COPY ./tsconfig.json ./
 COPY ./mojaloop-api.yaml ./
-COPY ./global.d.ts ./
 
 # Install dependencies
-RUN yarn install
+RUN npm install
 
 COPY ./src ./src
 
 # Build the project
-RUN yarn run build
+RUN npm run build
 
 # Environment variables for openfaas
 ENV cgi_headers="true"
@@ -49,19 +46,19 @@ ENV read_timeout="15s"
 ENV prefix_logs="false"
 
 # Service-Based Enviroment Variables
-ENV SERVICE_NAME="transaction-monitoring-service"
+ENV FUNCTION_NAME="transaction-monitoring-service"
 ENV NODE_ENV="prod"
 ENV REST_PORT=3000
 ENV GRPC_PORT=50051
 
-ENV NIFI_HOST="frm-nifi.frm"
-ENV NIFI_PORT=50051
+ENV DATA_PREPARATION_URL="http://nifi.development:8081"
+ENV DATA_PREPARATION_USERNAME="frm"
+ENV DATA_PREPARATION_PASSWORD="GeJj2BzCC2VNZ3zdMcE5"
 
 ENV LOGSTASH_HOST=127.0.0.1
 ENV LOGSTASH_PORT=3000
 
 ENV APM_LOGGING=true
-ENV APM_SERVICE_NAME=transaction-monitoring-service
 ENV APM_URL=http://apm-server-apm-server.frm:8200
 ENV APM_SECRET_TOKEN=
 
