@@ -47,19 +47,17 @@ ENV prefix_logs="false"
 
 # Service-Based Enviroment Variables
 ENV FUNCTION_NAME="transaction-monitoring-service"
-ENV NODE_ENV="prod"
+ENV NODE_ENV="production"
 ENV REST_PORT=3000
-ENV GRPC_PORT=50051
 
 ENV DATA_PREPARATION_URL="http://nifi.development:8081"
 ENV DATA_PREPARATION_USERNAME="frm"
 ENV DATA_PREPARATION_PASSWORD="GeJj2BzCC2VNZ3zdMcE5"
 
-ENV LOGSTASH_HOST=127.0.0.1
-ENV LOGSTASH_PORT=3000
+ENV LOGSTASH_URL=http://logstash.development:8080
 
 ENV APM_LOGGING=true
-ENV APM_URL=http://apm-server-apm-server.frm:8200
+ENV APM_URL="http://apm-server.development:8200"
 ENV APM_SECRET_TOKEN=
 
 

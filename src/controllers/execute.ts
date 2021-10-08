@@ -2,6 +2,7 @@ import { Context } from 'koa';
 import { LoggerService } from '../utils';
 import { config } from '../config';
 import axios from 'axios';
+import apm from 'elastic-apm-node';
 
 const sendDataPreparationRequest = async (toSend: Record<string, unknown>) => {
   const dataPrepResponse = await axios.post(`${config.dataPreparationUrl}`, toSend, {
@@ -13,6 +14,7 @@ const sendDataPreparationRequest = async (toSend: Record<string, unknown>) => {
 };
 
 export const monitorQuote = async (ctx: Context): Promise<Context> => {
+  const span = apm.startSpan('Fetch Typology Expression from Database');
   try {
     const reqData = ctx.request.body as Record<string, unknown>;
     reqData.TransactionType = 'pain.001.001.11';
@@ -26,7 +28,7 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
       error: error,
     };
   }
-
+  if (span) span.end();
   return ctx;
 };
 

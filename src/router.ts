@@ -5,6 +5,7 @@ import { monitorQuote, monitorTransfer } from './controllers/execute';
 const router = new Router();
 
 // health checks
+router.get('/', healthCheck);
 router.get('/health', healthCheck);
 
 // execute the service

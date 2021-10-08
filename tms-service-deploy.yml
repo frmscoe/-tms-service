@@ -7,7 +7,7 @@ functions:
     namespace: openfaas-fn
     lang: dockerfile
     handler: .
-    image: actio.azurecr.io/frm-transaction-monitoring-service:latest
+    image: actio.azurecr.io/off-frm-transaction-monitoring-service:latest
     annotations:
       com.openfaas.health.http.path: /health
       com.openfaas.health.http.initialDelay: "45s"
