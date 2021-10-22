@@ -3,7 +3,7 @@ provider:
   name: openfaas
   gateway: http://127.0.0.1:8080
 functions:
-  off-frm-transaction-monitoring-service:
+  off-transaction-monitoring-service:
     lang: dockerfile
     handler: .
-    image: localhost:5000/frm-transaction-monitoring-service:latest
+    image: localhost:5000/off-transaction-monitoring-service:latest

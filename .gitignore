@@ -65,7 +65,7 @@ typings/
 .next
 Katalon Tests/Profiles/
 
-.vscode
+.vscode/settings.json
 template
 templates
 dist

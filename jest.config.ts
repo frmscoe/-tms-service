@@ -23,7 +23,7 @@ const config: Config.InitialOptions = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['src/controllers/execute.ts'],
+  collectCoverageFrom: ['src'],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: '<rootDir>/coverage/',
@@ -138,13 +138,13 @@ const config: Config.InitialOptions = {
   // rootDir: ".",
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: ['<rootDir>/__tests__/'],
+  roots: ['<rootDir>/src/'],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: ['dotenv/config'],
+  setupFiles: ['<rootDir>/setup.jest.js'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: ['./jest.setup.redis-mock.js'],

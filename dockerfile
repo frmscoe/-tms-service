@@ -23,7 +23,7 @@ WORKDIR /home/app
 COPY ./package.json ./
 COPY ./package-lock.json ./
 COPY ./tsconfig.json ./
-COPY ./mojaloop-api.yaml ./
+COPY ./swagger.yaml ./
 
 # Install dependencies
 RUN npm install
