@@ -18,7 +18,7 @@ if (config.nodeEnv !== 'dev' && config.nodeEnv !== 'test') {
   });
 }
 
-const logger = config.nodeEnv === 'dev' || config.nodeEnv === 'test' ? console : log4js.getLogger();
+const logger = console;
 
 export abstract class LoggerService {
   static timeStamp(): string {

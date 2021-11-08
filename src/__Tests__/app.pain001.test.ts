@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import { Context } from 'koa';
-import { monitorQuote } from './app.controller';
+import { monitorQuote } from '../app.controller';
 
 describe('TMS Service', () => {
   let postSpy: jest.SpyInstance;
