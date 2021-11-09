@@ -98,6 +98,7 @@ export const transferResponse = async (ctx: Context): Promise<Context> => {
     const transaction: Pacs00200112V11Transaction = new Pacs00200112V11Transaction(request);
 
     await sendToDataPreparation(transaction);
+    LoggerService.log('Request sent to Data Preparation Service');
 
     ctx.status = 200;
     ctx.body = {
