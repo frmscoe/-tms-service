@@ -1129,11 +1129,14 @@ definitions:
         example: 'pacs.002.001.12'
       FIToFIPmtSts:
         type: object
+        required:
+          - GrpHdr
         properties:
           GrpHdr:
             type: object
             required:
               - MsgID
+              - CreDtTm
             properties:
               MsgID:
                 type: string
@@ -1168,9 +1171,15 @@ definitions:
                 type: array
                 items:
                   type: object
+                  required:
+                    - Amt
+                    - Agt
                   properties:
                     Amt:
                       type: object
+                      required:
+                        - Amt
+                        - Ccy
                       properties:
                         Amt:
                           type: number
@@ -1182,12 +1191,16 @@ definitions:
                           example: 'USD'
                     Agt:
                       type: object
+                      required:
+                        - FinInstnId
                       properties:
                         FinInstnId:
                           type: object
                           properties:
                             ClrSysMmbId:
                               type: object
+                              required:
+                                - MmbId
                               properties:
                                 MmbId:
                                   type: string
@@ -1199,12 +1212,16 @@ definitions:
                 example: '2021-09-13T15:56:49.000Z'
               InstgAgt:
                 type: object
+                required:
+                  - FinInstnId
                 properties:
                   FinInstnId:
                     type: object
                     properties:
                       ClrSysMmbId:
                         type: object
+                        required:
+                          - MmbId
                         properties:
                           MmbId:
                             type: string
@@ -1212,12 +1229,16 @@ definitions:
                             example: 'dfsp001'
               InstdAgt:
                 type: object
+                required:
+                  - FinInstnId
                 properties:
                   FinInstnId:
                     type: object
                     properties:
                       ClrSysMmbId:
                         type: object
+                        required:
+                          - MmbId
                         properties:
                           MmbId:
                             type: string

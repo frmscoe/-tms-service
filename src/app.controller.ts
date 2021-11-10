@@ -103,6 +103,7 @@ export const transferResponse = async (ctx: Context): Promise<Context> => {
     ctx.status = 200;
     ctx.body = {
       message: 'Transaction is valid',
+      sent: true,
       data: request,
     };
   } catch (error) {
