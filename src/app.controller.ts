@@ -25,6 +25,7 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
 
     await sendToDataPreparation(transaction);
 
+    LoggerService.log('Request sent to Data Preparation Service');
     ctx.status = 200;
     ctx.body = {
       message: 'Transaction is valid',
@@ -69,7 +70,7 @@ export const replyQuote = async (ctx: Context): Promise<Context> => {
     const transaction: Pain01300109Transaction = new Pain01300109Transaction(request);
 
     await sendToDataPreparation(transaction);
-
+    LoggerService.log('Request sent to Data Preparation Service');
     ctx.status = 200;
     ctx.body = {
       message: 'Transaction is valid',
