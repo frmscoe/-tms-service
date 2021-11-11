@@ -4,8 +4,9 @@ import { config } from './config';
 import axios from 'axios';
 import apm from 'elastic-apm-node';
 import { Pain001V11Transaction } from './interfaces/iPain001';
+import { Pain01300109Transaction } from './interfaces/iPain013';
 
-const sendToDataPreparation = async (data: Pain001V11Transaction) => {
+const sendToDataPreparation = async (data: Pain001V11Transaction | Pain01300109Transaction) => {
   const resp = await axios.post(`${config.dataPreparationUrl}`, data, {
     auth: { username: config.dataPreparationUsername, password: config.dataPreparationPassword },
   });
@@ -16,7 +17,7 @@ const sendToDataPreparation = async (data: Pain001V11Transaction) => {
 };
 
 export const monitorQuote = async (ctx: Context): Promise<Context> => {
-  const span = apm.startSpan('Fetch Typology Expression from Database');
+  const span = apm.startSpan('Transaction request received');
   try {
     const request = (ctx.request.body as unknown) ?? JSON.parse('');
 
@@ -24,6 +25,7 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
 
     await sendToDataPreparation(transaction);
 
+    LoggerService.log('Request sent to Data Preparation Service');
     ctx.status = 200;
     ctx.body = {
       message: 'Transaction is valid',
@@ -57,5 +59,32 @@ export const monitorTransfer = async (ctx: Context): Promise<Context> => {
     };
   }
 
+  return ctx;
+};
+
+export const replyQuote = async (ctx: Context): Promise<Context> => {
+  const span = apm.startSpan('Transaction request received');
+  try {
+    const request = (ctx.request.body as unknown) ?? JSON.parse('');
+
+    const transaction: Pain01300109Transaction = new Pain01300109Transaction(request);
+
+    await sendToDataPreparation(transaction);
+    LoggerService.log('Request sent to Data Preparation Service');
+    ctx.status = 200;
+    ctx.body = {
+      message: 'Transaction is valid',
+      data: request,
+    };
+  } catch (error) {
+    console.log(error);
+    LoggerService.log(error as string);
+
+    ctx.status = 500;
+    ctx.body = {
+      error: error,
+    };
+  }
+  if (span) span.end();
   return ctx;
 };

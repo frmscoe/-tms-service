@@ -1,127 +1,153 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  title: "Swagger Example"
+  title: 'Swagger Example'
   description: >
     FRM transaction validation.
-  version: "0.1.0"
+  version: '0.1.0'
 schemes:
-  - "http"
+  - 'http'
 paths:
   /:
     get:
-      summary: "Check the status of the service"
+      summary: 'Check the status of the service'
       description: "If the service is up and running correctly the response will be 'UP'"
       consumes:
-        - "application/json"
+        - 'application/json'
       produces:
-        - "application/json"
+        - 'application/json'
       responses:
         200:
-          description: "successful operation"
+          description: 'successful operation'
           schema:
-            $ref: "#/definitions/Health"
+            $ref: '#/definitions/Health'
         500:
-          $ref: "#/responses/500"
+          $ref: '#/responses/500'
   /health:
     get:
-      summary: "Check the status of the service"
+      summary: 'Check the status of the service'
       description: "If the service is up and running correctly the response will be 'UP'"
       consumes:
-        - "application/json"
+        - 'application/json'
       produces:
-        - "application/json"
+        - 'application/json'
       responses:
         200:
-          description: "successful operation"
+          description: 'successful operation'
           schema:
-            $ref: "#/definitions/Health"
+            $ref: '#/definitions/Health'
         500:
-          $ref: "#/responses/500"
+          $ref: '#/responses/500'
   /execute:
     post:
-      summary: "Monitor Quote Transaction"
-      description: "ISO20022 pain.001.001.11 formatted message expected. Historically Mojaloop Quote message."
+      summary: 'Monitor Quote Transaction'
+      description: 'ISO20022 pain.001.001.11 formatted message expected. Historically Mojaloop Quote message.'
       consumes:
-        - "application/json"
+        - 'application/json'
       produces:
-        - "application/json"
+        - 'application/json'
       parameters:
-        - in: "body"
-          name: "body"
-          description: "Validates request params"
+        - in: 'body'
+          name: 'body'
+          description: 'Validates request params'
           required: true
           schema:
-            $ref: "#/definitions/ISO20022Pain001"
+            $ref: '#/definitions/ISO20022Pain001'
       responses:
         200:
-          description: "successful operation"
+          description: 'successful operation'
           schema:
-            $ref: "#/definitions/TransactionResponse"
+            $ref: '#/definitions/TransactionResponse'
         400:
-          $ref: "#/responses/400"
+          $ref: '#/responses/400'
         401:
-          $ref: "#/responses/401"
+          $ref: '#/responses/401'
         500:
-          $ref: "#/responses/500"
+          $ref: '#/responses/500'
+  /quoteReply:
+    post:
+      summary: 'Reply Quote Transaction'
+      description: 'ISO20022 pain.013.001.09 formatted message expected. Historically Mojaloop Quote Response message.'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Validates request params'
+          required: true
+          schema:
+            $ref: '#/definitions/ISO20022Pain013'
+      responses:
+        200:
+          description: 'successful operation'
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        500:
+          $ref: '#/responses/500'
   /transfer:
     post:
-      summary: "Transfer"
-      description: "ISO20022 pacs.008.001.10 formatted message expected. Historically Mojaloop Transfer message."
+      summary: 'Transfer'
+      description: 'ISO20022 pacs.008.001.10 formatted message expected. Historically Mojaloop Transfer message.'
       consumes:
-        - "application/json"
+        - 'application/json'
       produces:
-        - "application/json"
+        - 'application/json'
       parameters:
-        - in: "body"
-          name: "body"
-          description: "Validates request params"
+        - in: 'body'
+          name: 'body'
+          description: 'Validates request params'
           required: true
           schema:
-            $ref: "#/definitions/FIToFICustomerCreditTransferV10"
+            $ref: '#/definitions/FIToFICustomerCreditTransferV10'
       responses:
         200:
-          description: "successful operation"
+          description: 'successful operation'
           schema:
-            $ref: "#/definitions/TransactionResponse"
+            $ref: '#/definitions/TransactionResponse'
         400:
-          $ref: "#/responses/400"
+          $ref: '#/responses/400'
         401:
-          $ref: "#/responses/401"
+          $ref: '#/responses/401'
         500:
-          $ref: "#/responses/500"
+          $ref: '#/responses/500'
 
 responses:
   400:
     description: Bad Request
     schema:
-      $ref: "#/definitions/Error"
+      $ref: '#/definitions/Error'
   401:
     description: Unauthorized
     schema:
-      $ref: "#/definitions/Error"
+      $ref: '#/definitions/Error'
   500:
     description: Internal Server Error
     schema:
-      $ref: "#/definitions/Error"
+      $ref: '#/definitions/Error'
 
 definitions:
   Health:
-    type: "object"
+    type: 'object'
     properties:
       status:
-        type: "string"
+        type: 'string'
         enum:
-          - "UP"
-          - "DOWN"
+          - 'UP'
+          - 'DOWN'
 
   TransactionResponse:
-    type: "object"
+    type: 'object'
     properties:
       message:
-        type: "string"
-        example: "Transaction is valid"
+        type: 'string'
+        example: 'Transaction is valid'
       data:
-        type: "object"
+        type: 'object'
 
   FIToFICustomerCreditTransferV10:
     type: object
@@ -130,7 +156,7 @@ definitions:
       - CreditTransferTransactionInformation
     properties:
       GrpHdr:
-        type: "object"
+        type: 'object'
         properties:
           MessageIdentification:
             type: string
@@ -470,7 +496,7 @@ definitions:
                 type: string
                 minLength: 1
                 maxLength: 4
-                pattern: "[0-9]{1,4}"
+                pattern: '[0-9]{1,4}'
               Proprietary:
                 type: string
                 maxLength: 35
@@ -519,7 +545,7 @@ definitions:
         type: string
         enum:
           - pain.001.001.11
-        example: "pain.001.001.11"
+        example: 'pain.001.001.11'
       CstmrCdtTrfInitn:
         type: object
         properties:
@@ -528,24 +554,24 @@ definitions:
             properties:
               MsgId:
                 type: string
-                pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
                 minLength: 36
                 maxLength: 36
-                example: "2669e349-500d-44ba-9e27-7767a16608a0"
+                example: '2669e349-500d-44ba-9e27-7767a16608a0'
               CreDtTm:
                 type: string
                 format: date-time
-                example: "2021-10-07T09:25:31.000Z"
+                example: '2021-10-07T09:25:31.000Z'
               NbOfTxs:
                 type: integer
-                pattern: "[0-9]{1,15}"
+                pattern: '[0-9]{1,15}'
                 example: 1
               InitgPty:
                 type: object
                 properties:
                   Nm:
                     type: string
-                    example: "Ivan Reese Russel-Klein"
+                    example: 'Ivan Reese Russel-Klein'
                     maxLength: 140
                   Id:
                     type: object
@@ -559,35 +585,35 @@ definitions:
                               BirthDt:
                                 type: string
                                 format: date
-                                example: "1967-11-23"
+                                example: '1967-11-23'
                               CityOfBirth:
                                 type: string
-                                example: "Unknown"
+                                example: 'Unknown'
                                 maxLength: 36
                               CtryOfBirth:
                                 type: string
                                 minLength: 2
                                 maxLength: 2
-                                example: "ZZ"
+                                example: 'ZZ'
                           Othr:
                             type: object
                             properties:
                               Id:
                                 type: string
-                                example: "+27783078685"
+                                example: '+27783078685'
                                 # here
                               SchmeNm:
                                 type: object
                                 properties:
                                   Prtry:
                                     type: string
-                                    example: "MSISDN"
+                                    example: 'MSISDN'
                   CtctDtls:
                     type: object
                     properties:
                       MobNb:
                         type: string
-                        example: "+27-783078685"
+                        example: '+27-783078685'
                         pattern: \+[0-9]{1,3}-[0-9()+\-]{1,30}
           PmtInf:
             type: object
@@ -597,10 +623,10 @@ definitions:
                 pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
                 minLength: 36
                 maxLength: 36
-                example: "b51ec534-ee48-4575-b6a9-ead2955b8069"
+                example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
               PmtMtd:
                 type: string
-                example: "TRA"
+                example: 'TRA'
                 pattern: ^[A-Z][A-Z]
               ReqdAdvcTp:
                 type: object
@@ -611,28 +637,28 @@ definitions:
                       Cd:
                         type: string
                         pattern: ^[A-Z]{4,4}
-                        example: "ADWD"
+                        example: 'ADWD'
                       Prtry:
                         type: string
                         maxLength: 36
-                        example: "Advice with transaction details"
+                        example: 'Advice with transaction details'
               ReqdExctnDt:
                 type: object
                 properties:
                   Dt:
                     type: string
                     format: date
-                    example: "2021-10-07"
+                    example: '2021-10-07'
                   DtTm:
                     type: string
                     format: date-time
-                    example: "2021-10-07T09:25:31.000Z"
+                    example: '2021-10-07T09:25:31.000Z'
               Dbtr:
                 type: object
                 properties:
                   Nm:
                     type: string
-                    example: "Ivan Reese Russel-Klein"
+                    example: 'Ivan Reese Russel-Klein'
                     maxLength: 140
                   Id:
                     type: object
@@ -646,37 +672,37 @@ definitions:
                               BirthDt:
                                 type: string
                                 format: date
-                                example: "1967-11-23"
+                                example: '1967-11-23'
                               CityOfBirth:
                                 type: string
-                                example: "Unknown"
+                                example: 'Unknown'
                                 maxLength: 36
                               CtryOfBirth:
                                 type: string
                                 minLength: 2
                                 maxLength: 2
-                                example: "ZZ"
+                                example: 'ZZ'
                           Othr:
                             type: object
                             properties:
                               Id:
                                 type: string
                                 maxLength: 36
-                                example: "+27783078685"
+                                example: '+27783078685'
                               SchmeNm:
                                 type: object
                                 properties:
                                   Prtry:
                                     type: string
                                     maxLength: 36
-                                    example: "MSISDN"
+                                    example: 'MSISDN'
                   CtctDtls:
                     type: object
                     properties:
                       MobNb:
                         type: string
                         pattern: \+[0-9]{1,3}-[0-9()+\-]{1,30}
-                        example: "+27-783078685"
+                        example: '+27-783078685'
               DbtrAcct:
                 type: object
                 properties:
@@ -689,18 +715,18 @@ definitions:
                           Id:
                             type: string
                             maxLength: 35
-                            example: "+27783078685"
+                            example: '+27783078685'
                           SchmeNm:
                             type: object
                             properties:
                               Prtry:
                                 type: string
                                 maxLength: 36
-                                example: "PASSPORT"
+                                example: 'PASSPORT'
                   Nm:
                     type: string
                     maxLength: 70
-                    example: "Ivan Russel-Klei"
+                    example: 'Ivan Russel-Klei'
               DbtrAgt:
                 type: object
                 properties:
@@ -713,7 +739,7 @@ definitions:
                           MmbId:
                             type: string
                             maxLength: 36
-                            example: "dfsp001"
+                            example: 'dfsp001'
               CdtTrfTxInf:
                 type: object
                 properties:
@@ -745,15 +771,15 @@ definitions:
                                   BirthDt:
                                     type: string
                                     format: date
-                                    example: "1973-01-01"
+                                    example: '1973-01-01'
                                   CityOfBirth:
                                     type: string
                                     maxLength: 36
-                                    example: "UNKNOWN"
+                                    example: 'UNKNOWN'
                                   CtryOfBirth:
                                     type: string
                                     pattern: ^[A-Z][A-Z]
-                                    example: "ZA"
+                                    example: 'ZA'
                               Othr:
                                 type: object
                                 properties:
@@ -785,7 +811,7 @@ definitions:
                           Prtry:
                             type: string
                             maxLength: 36
-                            example: "TRANSFER"
+                            example: 'TRANSFER'
                   Amt:
                     type: object
                     properties:
@@ -801,8 +827,8 @@ definitions:
                                 minimum: 0
                                 example: 50431891779910900
                               Ccy:
-                                $ref: "#/definitions/Currencies"
-                                example: "USD"
+                                $ref: '#/definitions/Currencies'
+                                example: 'USD'
                       EqvtAmt:
                         type: object
                         properties:
@@ -815,9 +841,9 @@ definitions:
                                 minimum: 0
                                 example: 50431891779910900
                               Ccy:
-                                $ref: "#/definitions/Currencies"
+                                $ref: '#/definitions/Currencies'
                           CcyOfTrf:
-                            $ref: "#/definitions/Currencies"
+                            $ref: '#/definitions/Currencies'
                   Purp:
                     type: object
                     properties:
@@ -847,36 +873,36 @@ definitions:
                                 properties:
                                   FrstNm:
                                     type: string
-                                    example: "Ivan"
+                                    example: 'Ivan'
                                   MddlNm:
                                     type: string
-                                    example: "Reese"
+                                    example: 'Reese'
                                   LastNm:
                                     type: string
-                                    example: "Russel-Klein"
+                                    example: 'Russel-Klein'
                                   MrchntClssfctnCd:
                                     type: string
-                                    example: "BLANK"
+                                    example: 'BLANK'
                               Dbtr:
                                 type: object
                                 properties:
                                   MddlNm:
                                     type: string
-                                    example: "Sam"
+                                    example: 'Sam'
                                   LastNm:
                                     type: string
-                                    example: "Adamson"
+                                    example: 'Adamson'
                                   MrchntClssfctnCd:
                                     type: string
-                                    example: "BLANK"
+                                    example: 'BLANK'
                                   FrstNm:
                                     type: string
-                                    example: "April"
+                                    example: 'April'
                               DbtrFinSvcsPrvdrFees:
                                 type: object
                                 properties:
                                   Ccy:
-                                    $ref: "#/definitions/Currencies"
+                                    $ref: '#/definitions/Currencies'
                                   Amt:
                                     type: number
                                     format: float
@@ -884,7 +910,7 @@ definitions:
                                     example: 499325661187237
                               Xprtn:
                                 type: string
-                                example: "2021-10-07T09:30:31.000Z"
+                                example: '2021-10-07T09:30:31.000Z'
                   PmtId:
                     type: object
                     properties:
@@ -901,16 +927,16 @@ definitions:
                             properties:
                               Id:
                                 type: string
-                                example: "+27783078685"
+                                example: '+27783078685'
                               SchmeNm:
                                 type: object
                                 properties:
                                   Prtry:
                                     type: string
-                                    example: "MSISDN"
+                                    example: 'MSISDN'
                       Nm:
                         type: string
-                        example: "April Adamson"
+                        example: 'April Adamson'
           SplmtryData:
             type: object
             properties:
@@ -925,16 +951,16 @@ definitions:
                         properties:
                           InitrTp:
                             type: string
-                            example: "CONSUMER"
+                            example: 'CONSUMER'
                           Glctn:
                             type: object
                             properties:
                               Lat:
                                 type: string
-                                example: "-3.1291"
+                                example: '-3.1291'
                               Long:
                                 type: string
-                                example: "39.0006"
+                                example: '39.0006'
 
   Currencies:
     enum:
@@ -1118,14 +1144,411 @@ definitions:
       - XPT
       - XAG
 
+  ISO20022Pain013:
+    type: object
+    required:
+      - TxTp
+      - CdtrPmtActvtnReq
+    properties:
+      TxTp:
+        type: string
+        enum:
+          - pain.013.001.09
+        example: 'pain.013.001.09'
+      CdtrPmtActvtnReq:
+        type: object
+        properties:
+          GrpHdr:
+            type: object
+            properties:
+              MsgId:
+                type: string
+                pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+                minLength: 36
+                maxLength: 36
+                example: '2669e349-500d-44ba-9e27-7767a16608a0'
+              CreDtTm:
+                type: string
+                format: date-time
+                example: '2021-10-07T09:25:31.000Z'
+              NbOfTxs:
+                type: integer
+                pattern: '[0-9]{1,15}'
+                example: 1
+              InitgPty:
+                type: object
+                properties:
+                  Nm:
+                    type: string
+                    example: 'Ivan Reese Russel-Klein'
+                    maxLength: 140
+                  Id:
+                    type: object
+                    properties:
+                      PrvtId:
+                        type: object
+                        properties:
+                          DtAndPlcOfBirth:
+                            type: object
+                            properties:
+                              BirthDt:
+                                type: string
+                                format: date
+                                example: '1967-11-23'
+                              CityOfBirth:
+                                type: string
+                                example: 'Unknown'
+                                maxLength: 36
+                              CtryOfBirth:
+                                type: string
+                                minLength: 2
+                                maxLength: 2
+                                example: 'ZZ'
+                          Othr:
+                            type: object
+                            properties:
+                              Id:
+                                type: string
+                                example: '+27783078685'
+                                # here
+                              SchmeNm:
+                                type: object
+                                properties:
+                                  Prtry:
+                                    type: string
+                                    example: 'MSISDN'
+                  CtctDtls:
+                    type: object
+                    properties:
+                      MobNb:
+                        type: string
+                        example: '+27-783078685'
+                        pattern: \+[0-9]{1,3}-[0-9()+\-]{1,30}
+          PmtInf:
+            type: object
+            properties:
+              PmtInfId:
+                type: string
+                pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+                minLength: 36
+                maxLength: 36
+                example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
+              PmtMtd:
+                type: string
+                example: 'TRA'
+                pattern: ^[A-Z][A-Z]
+              ReqdAdvcTp:
+                type: object
+                properties:
+                  DbtAdvc:
+                    type: object
+                    properties:
+                      Cd:
+                        type: string
+                        pattern: ^[A-Z]{4,4}
+                        example: 'ADWD'
+                      Prtry:
+                        type: string
+                        maxLength: 36
+                        example: 'Advice with transaction details'
+              ReqdExctnDt:
+                type: object
+                properties:
+                  Dt:
+                    type: string
+                    format: date
+                    example: '2021-10-07'
+                  DtTm:
+                    type: string
+                    format: date-time
+                    example: '2021-10-07T09:25:31.000Z'
+              Dbtr:
+                type: object
+                properties:
+                  Nm:
+                    type: string
+                    example: 'Ivan Reese Russel-Klein'
+                    maxLength: 140
+                  Id:
+                    type: object
+                    properties:
+                      PrvtId:
+                        type: object
+                        properties:
+                          DtAndPlcOfBirth:
+                            type: object
+                            properties:
+                              BirthDt:
+                                type: string
+                                format: date
+                                example: '1967-11-23'
+                              CityOfBirth:
+                                type: string
+                                example: 'Unknown'
+                                maxLength: 36
+                              CtryOfBirth:
+                                type: string
+                                minLength: 2
+                                maxLength: 2
+                                example: 'ZZ'
+                          Othr:
+                            type: object
+                            properties:
+                              Id:
+                                type: string
+                                maxLength: 36
+                                example: '+27783078685'
+                              SchmeNm:
+                                type: object
+                                properties:
+                                  Prtry:
+                                    type: string
+                                    maxLength: 36
+                                    example: 'MSISDN'
+                  CtctDtls:
+                    type: object
+                    properties:
+                      MobNb:
+                        type: string
+                        pattern: \+[0-9]{1,3}-[0-9()+\-]{1,30}
+                        example: '+27-783078685'
+              DbtrAcct:
+                type: object
+                properties:
+                  Id:
+                    type: object
+                    properties:
+                      Othr:
+                        type: object
+                        properties:
+                          Id:
+                            type: string
+                            maxLength: 35
+                            example: '+27783078685'
+                          SchmeNm:
+                            type: object
+                            properties:
+                              Prtry:
+                                type: string
+                                maxLength: 36
+                                example: 'PASSPORT'
+                  Nm:
+                    type: string
+                    maxLength: 70
+                    example: 'Ivan Russel-Klei'
+              DbtrAgt:
+                type: object
+                properties:
+                  FinInstnId:
+                    type: object
+                    properties:
+                      ClrSysMmbId:
+                        type: object
+                        properties:
+                          MmbId:
+                            type: string
+                            maxLength: 36
+                            example: 'dfsp001'
+              CdtTrfTxInf:
+                type: object
+                properties:
+                  ChrgBr:
+                    type: string
+                  CdtrAgt:
+                    type: object
+                    properties:
+                      FinInstnId:
+                        type: object
+                        properties:
+                          ClrSysMmbId:
+                            type: object
+                            properties:
+                              MmbId:
+                                type: string
+                  Cdtr:
+                    type: object
+                    properties:
+                      Id:
+                        type: object
+                        properties:
+                          PrvtId:
+                            type: object
+                            properties:
+                              DtAndPlcOfBirth:
+                                type: object
+                                properties:
+                                  BirthDt:
+                                    type: string
+                                    format: date
+                                    example: '1973-01-01'
+                                  CityOfBirth:
+                                    type: string
+                                    maxLength: 36
+                                    example: 'UNKNOWN'
+                                  CtryOfBirth:
+                                    type: string
+                                    pattern: ^[A-Z][A-Z]
+                                    example: 'ZA'
+                              Othr:
+                                type: object
+                                properties:
+                                  Id:
+                                    type: string
+                                  SchmeNm:
+                                    type: object
+                                    properties:
+                                      Prtry:
+                                        type: string
+                      CtctDtls:
+                        type: object
+                        properties:
+                          MobNb:
+                            type: string
+                      Nm:
+                        type: string
+                  RmtInf:
+                    type: object
+                    properties:
+                      Ustrd:
+                        type: string
+                  PmtTpInf:
+                    type: object
+                    properties:
+                      CtgyPurp:
+                        type: object
+                        properties:
+                          Prtry:
+                            type: string
+                            maxLength: 36
+                            example: 'TRANSFER'
+                  Amt:
+                    type: object
+                    properties:
+                      InstdAmt:
+                        type: object
+                        properties:
+                          Amt:
+                            type: object
+                            properties:
+                              Amt:
+                                type: number
+                                format: float
+                                minimum: 0
+                                example: 50431891779910900
+                              Ccy:
+                                $ref: '#/definitions/Currencies'
+                                example: 'USD'
+                      EqvtAmt:
+                        type: object
+                        properties:
+                          Amt:
+                            type: object
+                            properties:
+                              Amt:
+                                type: number
+                                format: float
+                                minimum: 0
+                                example: 50431891779910900
+                              Ccy:
+                                $ref: '#/definitions/Currencies'
+                          CcyOfTrf:
+                            $ref: '#/definitions/Currencies'
+                  Purp:
+                    type: object
+                    properties:
+                      Cd:
+                        type: string
+                  RgltryRptg:
+                    type: object
+                    properties:
+                      Dtls:
+                        type: object
+                        properties:
+                          Tp:
+                            type: string
+                          Cd:
+                            type: string
+                  SplmtryData:
+                    type: object
+                    properties:
+                      Envlp:
+                        type: object
+                        properties:
+                          Doc:
+                            type: object
+                            properties:
+                              PyeeRcvAmt:
+                                type: object
+                                properties:
+                                  Amt:
+                                    type: object
+                                    properties:
+                                      Amt:
+                                        type: number
+                                        format: float
+                                        minimum: 0
+                                        example: 50431891779910900
+                                      CCy:
+                                        $ref: '#/definitions/Currencies'
+                                  PyeeFinSvcsPrvdrFee:
+                                    type: object
+                                    properties:
+                                      Amt:
+                                        type: object
+                                        properties:
+                                          Amt:
+                                            type: number
+                                            format: float
+                                            minimum: 0
+                                            example: 50431891779910900
+                                          CCy:
+                                            $ref: '#/definitions/Currencies'
+                                  PyeeFinSvcsPrvdrComssn:
+                                    type: object
+                                    properties:
+                                      Amt:
+                                        type: object
+                                        properties:
+                                          Amt:
+                                            type: number
+                                            format: float
+                                            minimum: 0
+                                            example: 50431891779910900
+                                          CCy:
+                                            $ref: '#/definitions/Currencies'
+          SplmtryData:
+            type: object
+            properties:
+              Envlp:
+                type: object
+                properties:
+                  Doc:
+                    type: object
+                    properties:
+                      InitgPty:
+                        type: object
+                        properties:
+                          InitrTp:
+                            type: string
+                            example: 'CONSUMER'
+                          Glctn:
+                            type: object
+                            properties:
+                              Lat:
+                                type: string
+                                example: '-3.1291'
+                              Long:
+                                type: string
+                                example: '39.0006'
+
   Error:
-    type: "object"
+    type: 'object'
     properties:
       data:
-        type: "object"
+        type: 'object'
         properties:
           error:
-            type: "string"
+            type: 'string'
 
 parameters:
   accept:

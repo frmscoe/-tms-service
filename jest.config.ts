@@ -23,7 +23,7 @@ const config: Config.InitialOptions = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['src'],
+  collectCoverageFrom: ['src/app.controller.ts'],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: '<rootDir>/coverage/',
@@ -33,7 +33,6 @@ const config: Config.InitialOptions = {
     '/node_modules/',
     './src/interfaces',
     './src/models',
-    './__tests__',
     'interfaces',
     '.module.ts',
     '.mock.ts',
