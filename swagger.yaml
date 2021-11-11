@@ -115,6 +115,32 @@ paths:
           $ref: '#/responses/401'
         500:
           $ref: '#/responses/500'
+  /transfer-response:
+    post:
+      summary: 'Transfer response'
+      description: 'ISO20022 pacs.002.001.12 formatted message expected.'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Validates request params'
+          required: true
+          schema:
+            $ref: '#/definitions/ISO20022Pacs002'
+      responses:
+        200:
+          description: 'successful operation'
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        500:
+          $ref: '#/responses/500'
 
 responses:
   400:
@@ -961,6 +987,134 @@ definitions:
                               Long:
                                 type: string
                                 example: '39.0006'
+  ISO20022Pacs002:
+    type: object
+    required:
+      - TxTp
+      - FIToFIPmtSts
+    properties:
+      TxTp:
+        type: string
+        enum:
+          - pacs.002.001.12
+        example: 'pacs.002.001.12'
+      FIToFIPmtSts:
+        type: object
+        required:
+          - GrpHdr
+        properties:
+          GrpHdr:
+            type: object
+            required:
+              - MsgID
+              - CreDtTm
+            properties:
+              MsgID:
+                type: string
+                pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
+                minLength: 36
+                maxLength: 36
+                example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
+              CreDtTm:
+                type: string
+                format: date-time
+                example: '2021-09-13T15:56:49.000Z'
+          TxInfAndSts:
+            type: object
+            properties:
+              OrgnlInstrId:
+                type: string
+                pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
+                minLength: 36
+                maxLength: 36
+                example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
+              OrgnlEndToEndId:
+                type: string
+                pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
+                minLength: 36
+                maxLength: 36
+                example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
+              TxSts:
+                type: string
+                enum: [ACCC, ACCP, ACFC, ACSC, ACSP, ACTC, ACWC, ACWP, BLCK, CANC, PATC, PDNG, PRES, RCVD, RJCT]
+                example: 'ACSC'
+              ChrgsInf:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - Amt
+                    - Agt
+                  properties:
+                    Amt:
+                      type: object
+                      required:
+                        - Amt
+                        - Ccy
+                      properties:
+                        Amt:
+                          type: number
+                          format: float
+                          minimum: 0
+                          example: 50431891779910900
+                        Ccy:
+                          $ref: '#/definitions/Currencies'
+                          example: 'USD'
+                    Agt:
+                      type: object
+                      required:
+                        - FinInstnId
+                      properties:
+                        FinInstnId:
+                          type: object
+                          properties:
+                            ClrSysMmbId:
+                              type: object
+                              required:
+                                - MmbId
+                              properties:
+                                MmbId:
+                                  type: string
+                                  maxLength: 35
+                                  example: 'dfsp001'
+              AccptncDtTm:
+                type: string
+                format: date-time
+                example: '2021-09-13T15:56:49.000Z'
+              InstgAgt:
+                type: object
+                required:
+                  - FinInstnId
+                properties:
+                  FinInstnId:
+                    type: object
+                    properties:
+                      ClrSysMmbId:
+                        type: object
+                        required:
+                          - MmbId
+                        properties:
+                          MmbId:
+                            type: string
+                            maxLength: 35
+                            example: 'dfsp001'
+              InstdAgt:
+                type: object
+                required:
+                  - FinInstnId
+                properties:
+                  FinInstnId:
+                    type: object
+                    properties:
+                      ClrSysMmbId:
+                        type: object
+                        required:
+                          - MmbId
+                        properties:
+                          MmbId:
+                            type: string
+                            maxLength: 35
+                            example: 'dfsp002'
 
   Currencies:
     enum:
