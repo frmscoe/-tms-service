@@ -6,8 +6,9 @@ import apm from 'elastic-apm-node';
 import { Pain001V11Transaction } from './interfaces/iPain001';
 import { Pain01300109Transaction } from './interfaces/iPain013';
 import { Pacs00200112V11Transaction } from './interfaces/iPacs002';
+import { Pacs008V10Transaction } from './interfaces/iPacs008';
 
-const sendToDataPreparation = async (data: Pain001V11Transaction | Pain01300109Transaction | Pacs00200112V11Transaction) => {
+const sendToDataPreparation = async (data: Pain001V11Transaction | Pain01300109Transaction | Pacs00200112V11Transaction | Pacs008V10Transaction) => {
   const resp = await axios.post(`${config.dataPreparationUrl}`, data, {
     auth: { username: config.dataPreparationUsername, password: config.dataPreparationPassword },
   });
@@ -48,21 +49,27 @@ export const monitorTransfer = async (ctx: Context): Promise<Context> => {
   try {
     const reqData = (ctx.request.body as unknown) ?? JSON.parse('');
 
-    await sendToDataPreparation(reqData);
+    const transaction: Pacs008V10Transaction = new Pacs008V10Transaction(reqData);
 
+    await sendToDataPreparation(reqData);
+    LoggerService.log('Pacs.008 Request sent to Data Preparation Service');
     ctx.status = 200;
-    ctx.body = reqData;
+    ctx.body = transaction;
   } catch (error) {
-    LoggerService.log(error as string);
-    ctx.status = 500;
-    ctx.body = {
-      error: error,
-    };
+    if (error instanceof Error) {
+      LoggerService.error(error);
+      ctx.status = 500;
+      ctx.body = { "error": error.stack };
+    }
+    else {
+      LoggerService.error("Unknown error occurred");
+      ctx.status = 500;
+      ctx.body = { error: "Unknown error occurred" };
+    }
   }
 
   return ctx;
 };
-
 export const replyQuote = async (ctx: Context): Promise<Context> => {
   const span = apm.startSpan('Transaction request received');
   try {
