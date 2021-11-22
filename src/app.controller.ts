@@ -8,7 +8,9 @@ import { Pain01300109Transaction } from './interfaces/iPain013';
 import { Pacs00200112V11Transaction } from './interfaces/iPacs002';
 import { Pacs008V10Transaction } from './interfaces/iPacs008';
 
-const sendToDataPreparation = async (data: Pain001V11Transaction | Pain01300109Transaction | Pacs00200112V11Transaction | Pacs008V10Transaction) => {
+const sendToDataPreparation = async (
+  data: Pain001V11Transaction | Pain01300109Transaction | Pacs00200112V11Transaction | Pacs008V10Transaction,
+) => {
   const resp = await axios.post(`${config.dataPreparationUrl}`, data, {
     auth: { username: config.dataPreparationUsername, password: config.dataPreparationPassword },
   });
@@ -19,9 +21,8 @@ const sendToDataPreparation = async (data: Pain001V11Transaction | Pain01300109T
 };
 
 export const monitorQuote = async (ctx: Context): Promise<Context> => {
-  const span = apm.startSpan('Transaction request received');
   try {
-    const request = (ctx.request.body as unknown) ?? JSON.parse('');
+    const request = ctx.request.body ?? JSON.parse('');
 
     const transaction: Pain001V11Transaction = new Pain001V11Transaction(request);
 
@@ -41,13 +42,12 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
       error: error,
     };
   }
-  if (span) span.end();
   return ctx;
 };
 
 export const monitorTransfer = async (ctx: Context): Promise<Context> => {
   try {
-    const reqData = (ctx.request.body as unknown) ?? JSON.parse('');
+    const reqData = ctx.request.body ?? JSON.parse('');
 
     const transaction: Pacs008V10Transaction = new Pacs008V10Transaction(reqData);
 
@@ -59,21 +59,15 @@ export const monitorTransfer = async (ctx: Context): Promise<Context> => {
     if (error instanceof Error) {
       LoggerService.error(error);
       ctx.status = 500;
-      ctx.body = { "error": error.stack };
-    }
-    else {
-      LoggerService.error("Unknown error occurred");
-      ctx.status = 500;
-      ctx.body = { error: "Unknown error occurred" };
+      ctx.body = { error: error.stack };
     }
   }
 
   return ctx;
 };
 export const replyQuote = async (ctx: Context): Promise<Context> => {
-  const span = apm.startSpan('Transaction request received');
   try {
-    const request = (ctx.request.body as unknown) ?? JSON.parse('');
+    const request = ctx.request.body;
 
     const transaction: Pain01300109Transaction = new Pain01300109Transaction(request);
 
@@ -93,14 +87,12 @@ export const replyQuote = async (ctx: Context): Promise<Context> => {
       error: error,
     };
   }
-  if (span) span.end();
   return ctx;
 };
 
 export const transferResponse = async (ctx: Context): Promise<Context> => {
-  const span = apm.startSpan('Transfer response received');
   try {
-    const request = (ctx.request.body as unknown) ?? JSON.parse('');
+    const request = ctx.request.body ?? JSON.parse('');
 
     const transaction: Pacs00200112V11Transaction = new Pacs00200112V11Transaction(request);
 
@@ -121,6 +113,5 @@ export const transferResponse = async (ctx: Context): Promise<Context> => {
       error: error,
     };
   }
-  if (span) span.end();
   return ctx;
 };
