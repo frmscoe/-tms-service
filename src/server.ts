@@ -11,6 +11,8 @@ if (config.apmLogging) {
     serverUrl: config.apmURL,
     usePathAsTransactionName: true,
     active: config.apmLogging,
+    transactionIgnoreUrls: ['/health'],
+    disableInstrumentations: ['log4js'],
   });
 }
 
