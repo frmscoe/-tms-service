@@ -62,7 +62,7 @@ describe('TMS Service', () => {
     });
 
     it('should handle unsuccessful Transfer', async () => {
-      const ctx = { request: { body: '' } };
+      const ctx = { request: { body: undefined } };
 
       const result = await monitorTransfer(ctx as Context);
       expect(result.status).toEqual(500);

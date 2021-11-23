@@ -62,7 +62,21 @@ describe('TMS Service /transfer-response', () => {
     });
 
     it('should handle unsuccessful Quote', async () => {
-      const ctx = { request: { body: '' } };
+      const ctx = { request: { body: undefined } };
+
+      const result = await transferResponse(ctx as Context);
+      expect(result.status).toEqual(500);
+    });
+
+    it('should handle unsuccessful Data Prep request', async () => {
+      postSpy = jest.spyOn(axios, 'post').mockImplementation((url: string, data?: any) => {
+        return new Promise((resolve, reject) => {
+          resolve({ status: 500 });
+        });
+      });
+
+      const expectedReq = getMockRequest();
+      const ctx = { request: { body: expectedReq } };
 
       const result = await transferResponse(ctx as Context);
       expect(result.status).toEqual(500);

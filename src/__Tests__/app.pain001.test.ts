@@ -62,7 +62,7 @@ describe('TMS Service', () => {
     });
 
     it('should handle unsuccessful Quote', async () => {
-      const ctx = { request: { body: '' } };
+      const ctx = { request: { body: undefined } };
 
       const result = await monitorQuote(ctx as Context);
       expect(result.status).toEqual(500);
