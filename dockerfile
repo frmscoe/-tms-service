@@ -60,7 +60,6 @@ ENV APM_LOGGING=true
 ENV APM_URL=http://apm-server.development:8200
 ENV APM_SECRET_TOKEN=
 
-
 HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
 
 # Execute watchdog command
