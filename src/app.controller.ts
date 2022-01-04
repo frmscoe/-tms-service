@@ -54,7 +54,9 @@ export const monitorTransfer = async (ctx: Context): Promise<Context> => {
     await sendToDataPreparation(reqData);
     LoggerService.log('Pacs.008 Request sent to Data Preparation Service');
     ctx.status = 200;
-    ctx.body = transaction;
+    ctx.body = {
+      data: transaction,
+    };
   } catch (error) {
     if (error instanceof Error) {
       LoggerService.error(error);

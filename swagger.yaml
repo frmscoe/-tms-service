@@ -580,9 +580,7 @@ definitions:
             properties:
               MsgId:
                 type: string
-                pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
-                minLength: 36
-                maxLength: 36
+                maxLength: 35
                 example: '2669e349-500d-44ba-9e27-7767a16608a0'
               CreDtTm:
                 type: string
@@ -646,9 +644,7 @@ definitions:
             properties:
               PmtInfId:
                 type: string
-                pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
-                minLength: 36
-                maxLength: 36
+                maxLength: 35
                 example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
               PmtMtd:
                 type: string
@@ -1011,10 +1007,8 @@ definitions:
             properties:
               MsgID:
                 type: string
-                pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
-                minLength: 36
-                maxLength: 36
-                example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
+                maxLength: 35
+                example: 'b51ec54-ee48-4575-b6a9-ead2955b8069'
               CreDtTm:
                 type: string
                 format: date-time
@@ -1024,15 +1018,11 @@ definitions:
             properties:
               OrgnlInstrId:
                 type: string
-                pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
-                minLength: 36
-                maxLength: 36
-                example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
+                maxLength: 35
+                example: 'b51ec54-ee48-4575-b6a9-ead2955b8069'
               OrgnlEndToEndId:
                 type: string
-                pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
-                minLength: 36
-                maxLength: 36
+                maxLength: 35
                 example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
               TxSts:
                 type: string
@@ -1141,10 +1131,8 @@ definitions:
           properties:
             MsgId:
               type: string
-              pattern: "^[0-9a-f]{8}[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
-              minLength: 35
               maxLength: 35
-              example: "b51ec534ee48-4575-b6a9-ead2955b8069"
+              example: "b51ec534ee48-4575-b6a9-ead295580655"
             CreDtTm:
               type: string
               format: date-time
@@ -1188,16 +1176,12 @@ definitions:
                   properties:
                    InstrId:
                       type: string
-                      pattern: ^[0-9a-f]{8}[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-                      minLength: 35
                       maxLength: 35
-                      example: "b51ec534ee48-4575-b6a9-ead2955b8069"
+                      example: "b51ec534ee48-4575-b6a9-ead295580659"
                    EndToEndId:
                       type: string
-                      pattern: ^[0-9a-f]{8}[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-                      minLength: 35
                       maxLength: 35
-                      example: "b51ec534ee48-4575-b6a9-ead2955b8069"
+                      example: "b51ec534ee48-4575-b6a9-ead295580659"
                 IntrBkSttlmAmt:
                   type: object
                   required:
@@ -1848,10 +1832,8 @@ definitions:
               properties:
                 MsgId:
                   type: string
-                  pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
-                  minLength: 36
-                  maxLength: 36
-                  example: '2669e349-500d-44ba-9e27-7767a16608a0'
+                  maxLength: 35
+                  example: '2669e34-500d-44ba-9e27-7767a16608a0'
                 CreDtTm:
                   type: string
                   format: date-time
@@ -1914,10 +1896,8 @@ definitions:
               properties:
                 PmtInfId:
                   type: string
-                  pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
-                  minLength: 36
-                  maxLength: 36
-                  example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
+                  maxLength: 35
+                  example: 'b51ec34-ee48-4575-b6a9-ead2955b8069'
                 PmtMtd:
                   type: string
                   example: 'TRA'
