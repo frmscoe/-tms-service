@@ -580,8 +580,9 @@ definitions:
             properties:
               MsgId:
                 type: string
+                minLength: 35
                 maxLength: 35
-                example: '2669e349-500d-44ba-9e27-7767a16608a0'
+                example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               CreDtTm:
                 type: string
                 format: date-time
@@ -644,8 +645,9 @@ definitions:
             properties:
               PmtInfId:
                 type: string
+                minLength: 35
                 maxLength: 35
-                example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
+                example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               PmtMtd:
                 type: string
                 example: 'TRA'
@@ -1002,13 +1004,14 @@ definitions:
           GrpHdr:
             type: object
             required:
-              - MsgID
+              - MsgId
               - CreDtTm
             properties:
-              MsgID:
+              MsgId:
                 type: string
+                minLength: 35
                 maxLength: 35
-                example: 'b51ec54-ee48-4575-b6a9-ead2955b8069'
+                example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               CreDtTm:
                 type: string
                 format: date-time
@@ -1018,12 +1021,14 @@ definitions:
             properties:
               OrgnlInstrId:
                 type: string
+                minLength: 35
                 maxLength: 35
-                example: 'b51ec54-ee48-4575-b6a9-ead2955b8069'
+                example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               OrgnlEndToEndId:
                 type: string
+                minLength: 35
                 maxLength: 35
-                example: 'b51ec534-ee48-4575-b6a9-ead2955b8069'
+                example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               TxSts:
                 type: string
                 enum: [ACCC, ACCP, ACFC, ACSC, ACSP, ACTC, ACWC, ACWP, BLCK, CANC, PATC, PDNG, PRES, RCVD, RJCT]
@@ -1131,8 +1136,9 @@ definitions:
           properties:
             MsgId:
               type: string
+              minLength: 35
               maxLength: 35
-              example: "b51ec534ee48-4575-b6a9-ead295580655"
+              example: "8cc4f6ffb4fd4e31b42aec0ed5d600a0123"
             CreDtTm:
               type: string
               format: date-time
@@ -1176,12 +1182,14 @@ definitions:
                   properties:
                    InstrId:
                       type: string
+                      minLength: 35
                       maxLength: 35
-                      example: "b51ec534ee48-4575-b6a9-ead295580659"
+                      example: "8cc4f6ffb4fd4e31b42aec0ed5d600a0123"
                    EndToEndId:
                       type: string
+                      minLength: 35
                       maxLength: 35
-                      example: "b51ec534ee48-4575-b6a9-ead295580659"
+                      example: "8cc4f6ffb4fd4e31b42aec0ed5d600a0123"
                 IntrBkSttlmAmt:
                   type: object
                   required:
@@ -1832,8 +1840,9 @@ definitions:
               properties:
                 MsgId:
                   type: string
+                  minLength: 35
                   maxLength: 35
-                  example: '2669e34-500d-44ba-9e27-7767a16608a0'
+                  example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
                 CreDtTm:
                   type: string
                   format: date-time
@@ -1896,8 +1905,9 @@ definitions:
               properties:
                 PmtInfId:
                   type: string
+                  minLength: 35
                   maxLength: 35
-                  example: 'b51ec34-ee48-4575-b6a9-ead2955b8069'
+                  example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
                 PmtMtd:
                   type: string
                   example: 'TRA'
