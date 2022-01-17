@@ -580,7 +580,7 @@ definitions:
             properties:
               MsgId:
                 type: string
-                minLength: 35
+                minLength: 1
                 maxLength: 35
                 example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               CreDtTm:
@@ -645,7 +645,7 @@ definitions:
             properties:
               PmtInfId:
                 type: string
-                minLength: 35
+                minLength: 1
                 maxLength: 35
                 example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               PmtMtd:
@@ -1009,7 +1009,7 @@ definitions:
             properties:
               MsgId:
                 type: string
-                minLength: 35
+                minLength: 1
                 maxLength: 35
                 example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               CreDtTm:
@@ -1021,12 +1021,12 @@ definitions:
             properties:
               OrgnlInstrId:
                 type: string
-                minLength: 35
+                minLength: 1
                 maxLength: 35
                 example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               OrgnlEndToEndId:
                 type: string
-                minLength: 35
+                minLength: 1
                 maxLength: 35
                 example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
               TxSts:
@@ -1136,7 +1136,7 @@ definitions:
           properties:
             MsgId:
               type: string
-              minLength: 35
+              minLength: 1
               maxLength: 35
               example: "8cc4f6ffb4fd4e31b42aec0ed5d600a0123"
             CreDtTm:
@@ -1182,12 +1182,12 @@ definitions:
                   properties:
                    InstrId:
                       type: string
-                      minLength: 35
+                      minLength: 1
                       maxLength: 35
                       example: "8cc4f6ffb4fd4e31b42aec0ed5d600a0123"
                    EndToEndId:
                       type: string
-                      minLength: 35
+                      minLength: 1
                       maxLength: 35
                       example: "8cc4f6ffb4fd4e31b42aec0ed5d600a0123"
                 IntrBkSttlmAmt:
@@ -1840,7 +1840,7 @@ definitions:
               properties:
                 MsgId:
                   type: string
-                  minLength: 35
+                  minLength: 1
                   maxLength: 35
                   example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
                 CreDtTm:
@@ -1905,7 +1905,7 @@ definitions:
               properties:
                 PmtInfId:
                   type: string
-                  minLength: 35
+                  minLength: 1
                   maxLength: 35
                   example: '8cc4f6ffb4fd4e31b42aec0ed5d600a0123'
                 PmtMtd:
