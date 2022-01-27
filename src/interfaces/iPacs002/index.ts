@@ -31,5 +31,7 @@ export class Pacs00200112V11Transaction {
     if (!request?.FIToFIPmtSts?.hasOwnProperty('TxInfAndSts')) {
       throw Error('Incoming message format is wrong, missing field TxInfAndSts');
     }
+
+    Object.assign(this, request);
   }
 }
