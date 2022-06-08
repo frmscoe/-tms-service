@@ -46,7 +46,7 @@ ENV read_timeout="15s"
 ENV prefix_logs="false"
 
 # Service-Based Enviroment Variables
-ENV FUNCTION_NAME="transaction-monitoring-service"
+ENV FUNCTION_NAME="transaction-monitoring-service-rel-1-0-0"
 ENV NODE_ENV="production"
 ENV REST_PORT=3000
 
