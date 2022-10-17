@@ -5,7 +5,8 @@ export interface IConfig {
   dataPreparationUrl: string;
   dataPreparationUsername: string;
   dataPreparationPassword: string;
-  logstashUrl: string;
+  logstashHost: string;
+  logstashPort: number;
   apmLogging: boolean;
   apmSecretToken: string;
   apmURL: string;

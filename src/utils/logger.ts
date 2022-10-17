@@ -1,12 +1,12 @@
 import { config } from '../config';
-import log4js from 'log4js';
+import log4js, { Log4js } from 'log4js';
 
 if (config.nodeEnv !== 'dev' && config.nodeEnv !== 'test') {
   log4js.configure({
     appenders: {
       logstash: {
         type: '@log4js-node/logstash-http',
-        url: `${config.logstashUrl}/_bulk`,
+        url: `http://${config.logstashHost}:${config.logstashPort}/_bulk`,
         application: 'logstash-log4js',
         logType: 'application',
         logChannel: config.functionName,
@@ -35,19 +35,19 @@ export abstract class LoggerService {
     return `[${LoggerService.timeStamp()}][${config.functionName}${serviceOperation ? ' - ' + serviceOperation : ''}]`;
   }
 
-  static trace(message: string, serviceOperation?: string): void {
+  static trace(message: string, serviceOperation?: string) {
     logger.trace(`${LoggerService.messageStamp(serviceOperation)}[TRACE] - ${message}`);
   }
 
-  static log(message: string, serviceOperation?: string): void {
+  static log(message: string, serviceOperation?: string) {
     logger.info(`${LoggerService.messageStamp(serviceOperation)}[INFO] - ${message}`);
   }
 
-  static warn(message: string, serviceOperation?: string): void {
+  static warn(message: string, serviceOperation?: string) {
     logger.warn(`${LoggerService.messageStamp(serviceOperation)}[WARN] - ${message}`);
   }
 
-  static error(message: string | Error, innerError?: unknown, serviceOperation?: string): void {
+  static error(message: string | Error, innerError?: unknown, serviceOperation?: string) {
     let errMessage = typeof message === 'string' ? message : message.stack;
 
     if (innerError) {

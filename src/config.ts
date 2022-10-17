@@ -9,13 +9,14 @@ dotenv({
 });
 
 const config: IConfig = {
+  logstashHost: <string>process.env.LOGSTASH_HOST,
+  logstashPort: parseInt(process.env.LOGSTASH_PORT!, 10),
   functionName: <string>process.env.FUNCTION_NAME,
   nodeEnv: <string>process.env.NODE_ENV,
   restPort: parseInt(process.env.REST_PORT!, 10) || 3000,
   dataPreparationUrl: <string>process.env.DATA_PREPARATION_URL,
   dataPreparationUsername: <string>process.env.DATA_PREPARATION_USERNAME,
   dataPreparationPassword: <string>process.env.DATA_PREPARATION_PASSWORD,
-  logstashUrl: <string>process.env.LOGSTASH_URL,
   apmLogging: <boolean>(process.env.APM_LOGGING === 'true'),
   apmSecretToken: <string>process.env.APM_SECRET_TOKEN,
   apmURL: <string>process.env.APM_URL,

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { LoggerService } from './utils';
+import { LoggerService } from './utils/logger';
 import App from './app';
 import { config } from './config';
 import apm from 'elastic-apm-node';
