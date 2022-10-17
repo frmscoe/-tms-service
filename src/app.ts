@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Koa from 'koa';
 import * as swagger from 'swagger2';
-import { ui, validate } from 'swagger2-koa';
+import { validate } from 'swagger2-koa';
 import bodyParser from 'koa-bodyparser';
 import { Server } from 'http';
 import router from './router';
 import path from 'path';
+import { koaSwagger } from 'koa2-swagger-ui';
 
 class App extends Koa {
   public servers: Server[];
@@ -22,7 +23,14 @@ class App extends Koa {
   configureMiddlewares(): void {
     const readSwagger = swagger.loadDocumentSync(path.join(__dirname, '../swagger.yaml'));
     const swaggerDocument: swagger.Document = readSwagger as swagger.Document;
-    this.use(ui(swaggerDocument, '/swagger'));
+    this.use(
+      koaSwagger({
+        routePrefix: '/swagger', // host at /swagger instead of default /docs
+        swaggerOptions: {
+          url: '../swagger.yaml', // example path to json
+        },
+      }),
+    );
     this.use(validate(swaggerDocument));
 
     // LoggerService Middleware

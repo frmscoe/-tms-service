@@ -1,5 +1,5 @@
 FROM --platform=${TARGETPLATFORM:-linux/amd64} ghcr.io/openfaas/of-watchdog:0.8.4 as watchdog
-FROM --platform=${TARGETPLATFORM:-linux/amd64} node:14-alpine as ship
+FROM --platform=${TARGETPLATFORM:-linux/amd64} node:16.17-alpine as ship
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
@@ -54,13 +54,14 @@ ENV DATA_PREPARATION_URL=http://nifi.development:8081
 ENV DATA_PREPARATION_USERNAME=frm
 ENV DATA_PREPARATION_PASSWORD=
 
-ENV LOGSTASH_URL=logstash.development:8080
-
 ENV APM_LOGGING=true
 ENV APM_URL=http://apm-server.development:8200
 ENV APM_SECRET_TOKEN=
 
-HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
+ENV LOGSTASH_HOST=logstash.development:8080
+ENV LOGSTASH_PORT=8080
+
+HEALTHCHECK --interval=60s CMD [ -e /tmp/.lock ] || exit 1
 
 # Execute watchdog command
 CMD ["fwatchdog"]

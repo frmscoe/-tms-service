@@ -1,5 +1,5 @@
 import { Context } from 'koa';
-import { LoggerService } from './utils';
+import { LoggerService } from './utils/logger';
 import { config } from './config';
 import axios from 'axios';
 import apm from 'elastic-apm-node';
@@ -47,14 +47,17 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
 
 export const monitorTransfer = async (ctx: Context): Promise<Context> => {
   try {
-    const reqData = ctx.request.body ?? JSON.parse('');
+    const request = ctx.request.body ?? JSON.parse('');
 
-    const transaction: Pacs008V10Transaction = new Pacs008V10Transaction(reqData);
+    const transaction: Pacs008V10Transaction = new Pacs008V10Transaction(request);
 
-    await sendToDataPreparation(reqData);
-    LoggerService.log('Pacs.008 Request sent to Data Preparation Service');
+    await sendToDataPreparation(transaction);
+    LoggerService.log('Request sent to Data Preparation Service');
     ctx.status = 200;
-    ctx.body = transaction;
+    ctx.body = {
+      message: 'Transaction is valid',
+      data: request,
+    };
   } catch (error) {
     if (error instanceof Error) {
       LoggerService.error(error);
