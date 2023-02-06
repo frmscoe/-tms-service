@@ -75,7 +75,7 @@ export const replyQuote = async (ctx: Context): Promise<Context> => {
 
     const transaction: Pain01300109Transaction = new Pain01300109Transaction(request as Record<string, unknown>);
 
-    await sendToDataPreparation(transaction, 'quoteReply');
+    await sendToDataPreparation(transaction, '/quoteReply');
     LoggerService.log('Request sent to Data Preparation Service');
     ctx.status = 200;
     ctx.body = {
@@ -100,7 +100,7 @@ export const transferResponse = async (ctx: Context): Promise<Context> => {
 
     const transaction: Pacs00200112V11Transaction = new Pacs00200112V11Transaction(request);
 
-    await sendToDataPreparation(transaction, 'transfer-response');
+    await sendToDataPreparation(transaction, '/transfer-response');
     LoggerService.log('Request sent to Data Preparation Service');
 
     ctx.status = 200;
