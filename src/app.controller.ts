@@ -10,8 +10,9 @@ import { Pacs008V10Transaction } from './interfaces/iPacs008';
 
 const sendToDataPreparation = async (
   data: Pain001V11Transaction | Pain01300109Transaction | Pacs00200112V11Transaction | Pacs008V10Transaction,
+  path: string,
 ) => {
-  const resp = await axios.post(`${config.dataPreparationUrl}`, data, {
+  const resp = await axios.post(`${config.dataPreparationUrl}${path}`, data, {
     auth: { username: config.dataPreparationUsername, password: config.dataPreparationPassword },
   });
 
@@ -26,7 +27,7 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
 
     const transaction: Pain001V11Transaction = new Pain001V11Transaction(request);
 
-    await sendToDataPreparation(transaction);
+    await sendToDataPreparation(transaction, '/execute');
 
     LoggerService.log('Request sent to Data Preparation Service');
     ctx.status = 200;
@@ -51,8 +52,8 @@ export const monitorTransfer = async (ctx: Context): Promise<Context> => {
 
     const transaction: Pacs008V10Transaction = new Pacs008V10Transaction(request);
 
-    await sendToDataPreparation(transaction);
-    LoggerService.log('Request sent to Data Preparation Service');
+    await sendToDataPreparation(transaction, '/transfer');
+    LoggerService.log('Pacs.008 Request sent to Data Preparation Service');
     ctx.status = 200;
     ctx.body = {
       message: 'Transaction is valid',
@@ -72,9 +73,9 @@ export const replyQuote = async (ctx: Context): Promise<Context> => {
   try {
     const request = ctx.request.body;
 
-    const transaction: Pain01300109Transaction = new Pain01300109Transaction(request);
+    const transaction: Pain01300109Transaction = new Pain01300109Transaction(request as Record<string, unknown>);
 
-    await sendToDataPreparation(transaction);
+    await sendToDataPreparation(transaction, 'quoteReply');
     LoggerService.log('Request sent to Data Preparation Service');
     ctx.status = 200;
     ctx.body = {
@@ -99,7 +100,7 @@ export const transferResponse = async (ctx: Context): Promise<Context> => {
 
     const transaction: Pacs00200112V11Transaction = new Pacs00200112V11Transaction(request);
 
-    await sendToDataPreparation(transaction);
+    await sendToDataPreparation(transaction, 'transfer-response');
     LoggerService.log('Request sent to Data Preparation Service');
 
     ctx.status = 200;
