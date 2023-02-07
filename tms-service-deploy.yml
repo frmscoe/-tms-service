@@ -8,7 +8,7 @@ functions:
     lang: dockerfile
     handler: .
     image: actio.azurecr.io/off-transaction-monitoring-service-rel-1-0-0:latest
-    annotations:
+    labels:
       com.openfaas.health.http.path: /health
       com.openfaas.health.http.initialDelay: "45s"
       com.openfaas.profile: nodeselector
