@@ -9,10 +9,6 @@ functions:
     handler: .
     image: actio.azurecr.io/off-transaction-monitoring-service-rel-1-0-0:latest
     labels:
-      com.openfaas.health.http.path: /health
-      com.openfaas.health.http.initialDelay: "45s"
-      com.openfaas.profile: nodeselector
-      com.openfaas.health.http.path: /health
       com.openfaas.health.http.initialDelay: "45s"
       com.openfaas.profile: nodeselector
       com.openfaas.scale.type: rps
