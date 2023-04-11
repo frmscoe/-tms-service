@@ -10,4 +10,5 @@ export interface IConfig {
   apmLogging: boolean;
   apmSecretToken: string;
   apmURL: string;
+  maxCPU: number;
 }

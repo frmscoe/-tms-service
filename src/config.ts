@@ -20,6 +20,7 @@ const config: IConfig = {
   apmLogging: <boolean>(process.env.APM_LOGGING === 'true'),
   apmSecretToken: <string>process.env.APM_SECRET_TOKEN,
   apmURL: <string>process.env.APM_URL,
+  maxCPU: parseInt(process.env.MAX_CPU!, 10) || Number.MAX_SAFE_INTEGER,
 };
 
 export { config };
