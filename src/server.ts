@@ -39,9 +39,9 @@ process.on('unhandledRejection', (err) => {
   LoggerService.error(`process on unhandledRejection error: ${err}`);
 });
 
-const numCPUs = os.cpus().length > config.maxCPU ? config.maxCPU : os.cpus().length;
+const numCPUs = os.cpus().length > config.maxCPU ? config.maxCPU + 1 : os.cpus().length + 1;
 
-if (cluster.isMaster) {
+if (cluster.isMaster && config.maxCPU !== 1) {
   console.log(`Primary ${process.pid} is running`);
 
   // Fork workers.

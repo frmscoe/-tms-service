@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Server } from 'http';
 import Koa from 'koa';
+import bodyParser from 'koa-bodyparser';
+import { koaSwagger } from 'koa2-swagger-ui';
+import path from 'path';
 import * as swagger from 'swagger2';
 import { validate } from 'swagger2-koa';
-import bodyParser from 'koa-bodyparser';
-import { Server } from 'http';
 import router from './router';
-import path from 'path';
-import { koaSwagger } from 'koa2-swagger-ui';
+import { LoggerService } from './utils';
 
 class App extends Koa {
   public servers: Server[];
@@ -33,9 +34,12 @@ class App extends Koa {
     );
     this.use(validate(swaggerDocument));
 
-    // LoggerService Middleware
-    this.use(function* (next) {
-      yield next;
+    this.use(async (ctx, next) => {
+      await next();
+      const rt = ctx.response.get('X-Response-Time');
+      if (ctx.path !== '/health') {
+        LoggerService.log(`${ctx.method} ${ctx.url} - ${rt}`);
+      }
     });
 
     // x - response - time
