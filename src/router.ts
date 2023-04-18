@@ -14,7 +14,6 @@ router.post('/execute', monitorQuote);
 router.post('/quoteReply', replyQuote);
 // Transfer Pacs008
 router.post('/transfer', monitorTransfer);
-
 // transfer response
 router.post('/transfer-response', transferResponse);
 
