@@ -49,6 +49,7 @@ ENV prefix_logs="false"
 ENV FUNCTION_NAME="transaction-monitoring-service-rel-1-0-0"
 ENV NODE_ENV="production"
 ENV REST_PORT=3000
+ENV MAX_CPU=8
 
 ENV DATA_PREPARATION_URL=
 ENV DATA_PREPARATION_USERNAME=frm
