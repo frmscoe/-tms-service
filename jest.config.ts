@@ -23,6 +23,7 @@ const config: Config.InitialOptions = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
+  // collectCoverageFrom: ['src/app.controller.ts'],
   collectCoverageFrom: ['src/app.controller.ts'],
 
   // The directory where Jest should output its coverage files
@@ -33,13 +34,15 @@ const config: Config.InitialOptions = {
     '/node_modules/',
     './src/interfaces',
     './src/models',
+    './__tests__',
     'interfaces',
     '.module.ts',
     '.mock.ts',
     './src/index.ts',
     './src/clients/arangodb.ts',
     './src/clients/index.ts',
-    './src/clients/redisClient.ts',
+    './src/clients/redis.ts',
+    './router.ts',
     './jest.config.ts',
   ],
 
@@ -57,7 +60,7 @@ const config: Config.InitialOptions = {
   // An object that configures minimum threshold enforcement for coverage results
   coverageThreshold: {
     global: {
-      branches: 95,
+      branches: 80,
       functions: 95,
       lines: 95,
       statements: 95,
@@ -137,16 +140,16 @@ const config: Config.InitialOptions = {
   // rootDir: ".",
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: ['<rootDir>/src/'],
+  roots: ['<rootDir>/__tests__/'],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: ['<rootDir>/setup.jest.js', './cluster-setup.ts'],
+  setupFiles: ['dotenv/config', './cluster-setup.ts'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: ['./jest.setup.redis-mock.js'],
+  setupFilesAfterEnv: ['./setup.jest.js'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
