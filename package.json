@@ -101,12 +101,6 @@
     "typedoc": "^0.23.16",
     "typescript": "^5.0.4"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run test"
-    }
-  },
   "lint-staged": {
     "*.{js,ts}": [
       "eslint --fix",
