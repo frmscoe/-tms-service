@@ -1,15 +1,14 @@
-import { handleResponse } from '@frmscoe/frms-coe-startup-lib';
+import { Context } from 'koa';
 import { Pacs00200112V11Transaction } from './interfaces/iPacs002';
 import { Pacs008V10Transaction } from './interfaces/iPacs008';
 import { Pain001V11Transaction } from './interfaces/iPain001';
 import { Pain01300109Transaction } from './interfaces/iPain013';
-import { loggerService } from './server';
-import { Context } from 'koa';
+import { loggerService, server } from './server';
 
 const sendToDataPreparation = async (
   data: Pain001V11Transaction | Pain01300109Transaction | Pacs00200112V11Transaction | Pacs008V10Transaction,
 ) => {
-  await handleResponse(JSON.stringify(data),["dataPrep"]); // fix
+  await server.handleResponse(data);
 };
 
 export const monitorQuote = async (ctx: Context): Promise<Context> => {

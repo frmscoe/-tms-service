@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { LoggerService } from '@frmscoe/frms-coe-lib';
-import { initProducer } from '@frmscoe/frms-coe-startup-lib';
+import { IStartupService, StartupFactory } from '@frmscoe/frms-coe-startup-lib';
 import cluster from 'cluster';
 import apm from 'elastic-apm-node';
 import os from 'os';
@@ -20,6 +20,8 @@ if (config.apmLogging) {
 }
 
 export const loggerService: LoggerService = new LoggerService();
+export let server: IStartupService;
+
 const runServer = async (): Promise<App> => {
   /**
    * KOA Rest Server
@@ -27,17 +29,19 @@ const runServer = async (): Promise<App> => {
   const app = new App();
   let some = config.apmURL;
 
+  server = new StartupFactory();
   if (config.nodeEnv !== 'test') {
     for (let retryCount = 0; retryCount < 10; retryCount++) {
-      console.log(`Connecting to nats server...`);
-      if (!(await initProducer())) {
+      console.log('Connecting to nats server...');
+      if (!(await server.initProducer())) {
         await new Promise((resolve) => setTimeout(resolve, 5000));
       } else {
-        console.log(`Connected to nats`);
+        console.log('Connected to nats');
         break;
       }
     }
   }
+
   app.listen(config.restPort, () => {
     loggerService.log(`API restServer listening on PORT ${config.restPort}`);
   });
@@ -59,7 +63,7 @@ if (cluster.isMaster && config.maxCPU !== 1) {
   console.log(`Primary ${process.pid} is running`);
 
   // Fork workers.
-  for (let i = 1; i < numCPUs; i++) {
+  for (let i = 1; i < 2; i++) {
     cluster.fork();
   }
 
@@ -71,8 +75,7 @@ if (cluster.isMaster && config.maxCPU !== 1) {
   // Workers can share any TCP connection
   // In this case it is an HTTP server
   try {
-    if (process.env.NODE_ENV !== 'test')
-    runServer();
+    if (process.env.NODE_ENV !== 'test') runServer();
   } catch (err) {
     loggerService.error(`Error while starting HTTP server on Worker ${process.pid}`, err);
   }
