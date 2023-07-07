@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Server } from 'http';
+import { type Server } from 'http';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import { koaSwagger } from 'koa2-swagger-ui';
@@ -7,7 +7,7 @@ import path from 'path';
 import * as swagger from 'swagger2';
 import { validate } from 'swagger2-koa';
 import router from './router';
-import { LoggerService } from './utils';
+import { loggerService } from './server';
 
 class App extends Koa {
   public servers: Server[];
@@ -38,7 +38,7 @@ class App extends Koa {
       await next();
       const rt = ctx.response.get('X-Response-Time');
       if (ctx.path !== '/health') {
-        LoggerService.log(`${ctx.method} ${ctx.url} - ${rt}`);
+        loggerService.log(`${ctx.method} ${ctx.url} - ${rt}`);
       }
     });
 
