@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@frmscoe/frms-coe-lib": "^0.1.27",
-    "@frmscoe/frms-coe-startup-lib": "^0.0.10",
+    "@frmscoe/frms-coe-startup-lib": "^0.0.11",
     "@log4js-node/logstash-http": "^1.1.0",
     "@types/axios": "^0.14.0",
     "@types/koa": "^2.13.3",
