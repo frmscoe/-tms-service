@@ -13,7 +13,8 @@ RUN addgroup -S app && adduser -S -g app app
 
 # Upgrade all packages
 RUN apk --no-cache update && \
-    apk --no-cache upgrade
+    apk --no-cache upgrade && \
+    apk --no-cache add curl ca-certificates
 
 # Set working directory
 WORKDIR /home/app
