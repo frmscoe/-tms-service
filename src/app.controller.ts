@@ -1,4 +1,4 @@
-import { Context } from 'koa';
+import { type Context } from 'koa';
 import { Pacs00200112V11Transaction } from './interfaces/iPacs002';
 import { Pacs008V10Transaction } from './interfaces/iPacs008';
 import { Pain001V11Transaction } from './interfaces/iPain001';
@@ -7,7 +7,7 @@ import { loggerService, server } from './server';
 
 const sendToDataPreparation = async (
   data: Pain001V11Transaction | Pain01300109Transaction | Pacs00200112V11Transaction | Pacs008V10Transaction,
-) => {
+): Promise<void> => {
   await server.handleResponse(data);
 };
 
@@ -30,7 +30,7 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
 
     ctx.status = 500;
     ctx.body = {
-      error: error,
+      error,
     };
   }
   return ctx;
@@ -78,7 +78,7 @@ export const replyQuote = async (ctx: Context): Promise<Context> => {
 
     ctx.status = 500;
     ctx.body = {
-      error: error,
+      error,
     };
   }
   return ctx;
@@ -103,7 +103,7 @@ export const transferResponse = async (ctx: Context): Promise<Context> => {
 
     ctx.status = 500;
     ctx.body = {
-      error: error,
+      error,
     };
   }
   return ctx;

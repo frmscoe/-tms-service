@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Server } from 'http';
+import { type Server } from 'http';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import { koaSwagger } from 'koa2-swagger-ui';

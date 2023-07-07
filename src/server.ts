@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { LoggerService } from '@frmscoe/frms-coe-lib';
-import { IStartupService, StartupFactory } from '@frmscoe/frms-coe-startup-lib';
+import { type IStartupService, StartupFactory } from '@frmscoe/frms-coe-startup-lib';
 import cluster from 'cluster';
 import apm from 'elastic-apm-node';
 import os from 'os';
@@ -27,7 +27,7 @@ const runServer = async (): Promise<App> => {
    * KOA Rest Server
    */
   const app = new App();
-  let some = config.apmURL;
+  const some = config.apmURL;
 
   server = new StartupFactory();
   if (config.nodeEnv !== 'test') {
@@ -50,11 +50,11 @@ const runServer = async (): Promise<App> => {
 };
 
 process.on('uncaughtException', (err) => {
-  loggerService.error(`process on uncaughtException error: ${err}`);
+  loggerService.error(`process on uncaughtException error: `, err);
 });
 
 process.on('unhandledRejection', (err) => {
-  loggerService.error(`process on unhandledRejection error: ${err}`);
+  loggerService.error(`process on unhandledRejection error: `, err);
 });
 
 const numCPUs = os.cpus().length > config.maxCPU ? config.maxCPU + 1 : os.cpus().length + 1;
@@ -68,17 +68,17 @@ if (cluster.isMaster && config.maxCPU !== 1) {
   }
 
   cluster.on('exit', (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died, starting another worker`);
+    console.log(`worker ${worker.process.pid!} died, starting another worker`);
     cluster.fork();
   });
 } else {
   // Workers can share any TCP connection
   // In this case it is an HTTP server
   try {
-    if (process.env.NODE_ENV !== 'test') 
-    async () => {
-      await runServer();
-    }
+    if (process.env.NODE_ENV !== 'test')
+      (async () => {
+        await runServer();
+      })();
   } catch (err) {
     loggerService.error(`Error while starting HTTP server on Worker ${process.pid}`, err);
   }
