@@ -1,4 +1,4 @@
-import { Context, Next } from 'koa';
+import { type Context, type Next } from 'koa';
 
 export const healthCheck = async (ctx: Context, next: Next): Promise<Context> => {
   ctx.status = 200;
