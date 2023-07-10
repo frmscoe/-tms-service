@@ -21,6 +21,7 @@ RUN npm ci --omit=dev --ignore-scripts
 RUN npm run build
 
 FROM gcr.io/distroless/nodejs16-debian11:nonroot
+USER nonroot
 
 COPY --from=builder /home/app /home/app
 
