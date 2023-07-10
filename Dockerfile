@@ -16,12 +16,11 @@ ENV GH_TOKEN=
 
 # Install dependencies for production
 RUN npm ci --omit=dev --ignore-scripts
-RUN npm i typescript
 
 # Build the project
 RUN npm run build
 
-FROM gcr.io/distroless/nodejs16-debian11
+FROM gcr.io/distroless/nodejs16-debian11:nonroot
 
 COPY --from=builder /home/app /home/app
 
