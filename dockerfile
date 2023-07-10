@@ -33,9 +33,6 @@ COPY ./src ./src
 # Build the project
 RUN npm run build
 
-# Copy built artifacts from the previous stage
-COPY --from=build /home/app ./
-
 # Set environment variables
 ENV cgi_headers="true"
 ENV fprocess="node ./build/server.js"
