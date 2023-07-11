@@ -4,7 +4,7 @@ metadata:
   name: off-transaction-monitoring-service-rel-1-0-0
   namespace: processor
   labels:
-    faas_function: off-transaction-monitoring-service-rel-1-0-0
+    app: off-transaction-monitoring-service
 spec:
   replicas: 1
   selector:
