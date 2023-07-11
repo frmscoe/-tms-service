@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: off-transaction-monitoring-service-rel-1-0-0
+  namespace: processor
+  labels:
+    faas_function: off-transaction-monitoring-service-rel-1-0-0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: off-transaction-monitoring-service
+  template:
+    metadata:
+      name: off-transaction-monitoring-service-rel-1-0-0
+      labels:
+        app: off-transaction-monitoring-service
+      annotations:
+        prometheus.io.scrape: 'false'
+    spec:
+      containers:
+        - name: off-transaction-monitoring-service-rel-1-0-0
+          image: actio.azurecr.io/off-transaction-monitoring-service-rel-1-0-0:1.0.0
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      imagePullSecrets:
+        - name: frmpullsecret
+      schedulerName: default-scheduler
+      enableServiceLinks: false
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
