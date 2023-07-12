@@ -11,6 +11,7 @@ COPY ./src ./src
 COPY ./package.json ./
 COPY ./package-lock.json ./
 COPY ./tsconfig.json ./
+COPY ./swagger.yaml ./
 COPY ./.npmrc ./
 ENV GH_TOKEN=
 
