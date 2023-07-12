@@ -11,7 +11,6 @@ COPY ./src ./src
 COPY ./package.json ./
 COPY ./package-lock.json ./
 COPY ./tsconfig.json ./
-COPY ./swagger.yaml ./
 COPY ./.npmrc ./
 ENV GH_TOKEN=
 
@@ -20,6 +19,7 @@ RUN npm ci --omit=dev --ignore-scripts
 
 # Build the project
 RUN npm run build
+COPY ./swagger.yaml ./build
 
 FROM gcr.io/distroless/nodejs16-debian11:nonroot
 USER nonroot
