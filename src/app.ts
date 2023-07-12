@@ -22,6 +22,7 @@ class App extends Koa {
   }
 
   configureMiddlewares(): void {
+    // don't believe
     const readSwagger = swagger.loadDocumentSync('./build/swagger.yaml');
     const swaggerDocument: swagger.Document = readSwagger as swagger.Document;
     this.use(
