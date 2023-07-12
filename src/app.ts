@@ -22,7 +22,7 @@ class App extends Koa {
   }
 
   configureMiddlewares(): void {
-    const readSwagger = swagger.loadDocumentSync(path.join(__dirname, '../swagger.yaml'));
+    const readSwagger = swagger.loadDocumentSync(path.join(__dirname, './swagger.yaml'));
     const swaggerDocument: swagger.Document = readSwagger as swagger.Document;
     this.use(
       koaSwagger({
