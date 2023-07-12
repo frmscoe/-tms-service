@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: off-transaction-monitoring-service-rel-1-0-0
+  name: transaction-monitoring-service-rel-1-0-0
   namespace: processor
   labels:
-    app: off-transaction-monitoring-service
+    app: transaction-monitoring-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: off-transaction-monitoring-service
+      app: transaction-monitoring-service
   template:
     metadata:
-      name: off-transaction-monitoring-service-rel-1-0-0
+      name: transaction-monitoring-service-rel-1-0-0
       labels:
-        app: off-transaction-monitoring-service
+        app: transaction-monitoring-service
       annotations:
         prometheus.io.scrape: 'false'
     spec:
       containers:
-        - name: off-transaction-monitoring-service-rel-1-0-0
-          image: actio.azurecr.io/off-transaction-monitoring-service-rel-1-0-0:1.0.0
+        - name: transaction-monitoring-service-rel-1-0-0
+          image: actio.azurecr.io/transaction-monitoring-service-rel-1-0-0:1.0.0
           ports:
             - name: http
               containerPort: 8080
