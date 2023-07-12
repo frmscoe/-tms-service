@@ -22,9 +22,7 @@ spec:
         - name: transaction-monitoring-service-rel-1-0-0
           image: actio.azurecr.io/transaction-monitoring-service-rel-1-0-0:1.0.0
           ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
+            - '3000:3000'
           resources: {}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
