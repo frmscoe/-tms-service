@@ -4,17 +4,17 @@ metadata:
   name: off-transaction-monitoring-service-rel-1-0-0
   namespace: processor
   labels:
-    app: off-transaction-monitoring-service-rel-1-0-0
+    app: off-transaction-monitoring-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: off-transaction-monitoring-service-rel-1-0-0
+      app: off-transaction-monitoring-service
   template:
     metadata:
       name: off-transaction-monitoring-service-rel-1-0-0
       labels:
-        app: off-transaction-monitoring-service-rel-1-0-0
+        app: off-transaction-monitoring-service
       annotations:
         prometheus.io.scrape: 'false'
     spec:
