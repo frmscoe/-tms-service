@@ -22,13 +22,14 @@ class App extends Koa {
   }
 
   configureMiddlewares(): void {
-    const readSwagger = swagger.loadDocumentSync(path.join(__dirname, '../swagger.yaml'));
+    // don't believe
+    const readSwagger = swagger.loadDocumentSync('./build/swagger.yaml');
     const swaggerDocument: swagger.Document = readSwagger as swagger.Document;
     this.use(
       koaSwagger({
         routePrefix: '/swagger', // host at /swagger instead of default /docs
         swaggerOptions: {
-          url: '../swagger.yaml', // example path to json
+          url: './build/swagger.yaml', // example path to json
         },
       }),
     );
