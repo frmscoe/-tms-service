@@ -27,6 +27,7 @@ spec:
               containerPort: 3000	
               hostPort: 3000
           resources: {}
+          imagePullPolicy: Always
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
