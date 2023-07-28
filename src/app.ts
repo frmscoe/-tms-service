@@ -3,7 +3,6 @@ import { type Server } from 'http';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import { koaSwagger } from 'koa2-swagger-ui';
-import path from 'path';
 import * as swagger from 'swagger2';
 import { validate } from 'swagger2-koa';
 import router from './router';
