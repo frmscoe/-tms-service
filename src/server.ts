@@ -27,7 +27,6 @@ const runServer = async (): Promise<App> => {
    * KOA Rest Server
    */
   const app = new App();
-  const some = config.apmURL;
 
   server = new StartupFactory();
   if (config.nodeEnv !== 'test') {
@@ -63,7 +62,7 @@ if (cluster.isMaster && config.maxCPU !== 1) {
   console.log(`Primary ${process.pid} is running`);
 
   // Fork workers.
-  for (let i = 1; i < 2; i++) {
+  for (let i = 1; i < numCPUs; i++) {
     cluster.fork();
   }
 
