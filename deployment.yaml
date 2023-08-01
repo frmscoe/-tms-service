@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: transaction-monitoring-service-rel-1-0-0
-          image: actio.azurecr.io/transaction-monitoring-service-rel-1-0-0:1.0.0
+          image: example.io/transaction-monitoring-service-rel-1-0-0:1.0.0
           ports:
             - name: http
               protocol: TCP
