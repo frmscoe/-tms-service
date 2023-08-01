@@ -3,13 +3,20 @@ import { Pacs00200112V11Transaction } from './interfaces/iPacs002';
 import { Pacs008V10Transaction } from './interfaces/iPacs008';
 import { Pain001V11Transaction } from './interfaces/iPain001';
 import { Pain01300109Transaction } from './interfaces/iPain013';
-import { loggerService, server } from './server';
 import apm from 'elastic-apm-node';
+import { loggerService } from './server';
+import axios from 'axios';
+import { config } from './config';
 
 const sendToDataPreparation = async (
   data: Pain001V11Transaction | Pain01300109Transaction | Pacs00200112V11Transaction | Pacs008V10Transaction,
+  path: string,
 ): Promise<void> => {
-  await server.handleResponse(data);
+  const resp = await axios.post(`${config.dataPreparationUrl}${path}`, data);
+
+  if (resp.status !== 200) {
+    loggerService.error(resp.data);
+  }
 };
 
 export const monitorQuote = async (ctx: Context): Promise<Context> => {
@@ -19,8 +26,8 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
 
     const transaction: Pain001V11Transaction = new Pain001V11Transaction(request);
 
-    const spanToDataPrep = apm.startSpan('send.dataprep', { childOf: apmTransaction?.ids['transaction.id'] });
-    await sendToDataPreparation(transaction);
+    const spanToDataPrep = apm.startSpan('send.dataprep');
+    await sendToDataPreparation(transaction, '/execute');
     spanToDataPrep?.end();
 
     loggerService.log('Request sent to Data Preparation Service');
@@ -48,10 +55,10 @@ export const monitorTransfer = async (ctx: Context): Promise<Context> => {
 
     const transaction: Pacs008V10Transaction = new Pacs008V10Transaction(request);
 
-    const spanToDataPrep = apm.startSpan('send.dataprep', { childOf: apmTransaction?.ids['transaction.id'] });
-    await sendToDataPreparation(transaction);
-    spanToDataPrep?.end();
+    const spanToDataPrep = apm.startSpan('send.dataprep');
 
+    await sendToDataPreparation(transaction, '/transfer');
+    spanToDataPrep?.end();
     loggerService.log('Pacs.008 Request sent to Data Preparation Service');
     ctx.status = 200;
     ctx.body = {
@@ -75,10 +82,10 @@ export const replyQuote = async (ctx: Context): Promise<Context> => {
 
     const transaction: Pain01300109Transaction = new Pain01300109Transaction(request as Record<string, unknown>);
 
-    const spanToDataPrep = apm.startSpan('send.dataprep', { childOf: apmTransaction?.ids['transaction.id'] });
-    await sendToDataPreparation(transaction);
-    spanToDataPrep?.end();
+    const spanToDataPrep = apm.startSpan('send.dataprep');
 
+    await sendToDataPreparation(transaction, '/quoteReply');
+    spanToDataPrep?.end();
     loggerService.log('Request sent to Data Preparation Service');
     ctx.status = 200;
     ctx.body = {
@@ -86,8 +93,7 @@ export const replyQuote = async (ctx: Context): Promise<Context> => {
       data: request,
     };
   } catch (error) {
-    console.log(error);
-    loggerService.log(error as string);
+    loggerService.error(error as string);
 
     ctx.status = 500;
     ctx.body = {
@@ -99,11 +105,14 @@ export const replyQuote = async (ctx: Context): Promise<Context> => {
 };
 
 export const transferResponse = async (ctx: Context): Promise<Context> => {
+  const apmTransaction = apm.startTransaction('transferResponse');
   try {
     const request = ctx.request.body ?? JSON.parse('');
     const transaction: Pacs00200112V11Transaction = new Pacs00200112V11Transaction(request);
 
-    await sendToDataPreparation(transaction);
+    const apmSpan = apm.startSpan('req.sendto.dataprep');
+    await sendToDataPreparation(transaction, '/transfer-response');
+    apmSpan?.end();
     loggerService.log('Request sent to Data Preparation Service');
 
     ctx.status = 200;
@@ -113,12 +122,13 @@ export const transferResponse = async (ctx: Context): Promise<Context> => {
       data: request,
     };
   } catch (error) {
-    loggerService.log(error as string);
+    loggerService.error(error as string);
 
     ctx.status = 500;
     ctx.body = {
       error,
     };
   }
+  apmTransaction?.end();
   return ctx;
 };

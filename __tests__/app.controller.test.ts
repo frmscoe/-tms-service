@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import { Context } from 'koa';
-import { runServer, server } from '../src/server';
-import * as startUpLib from '@frmscoe/frms-coe-startup-lib';
+import { runServer } from '../src/server';
 import App from '../src/app';
 import { monitorQuote, monitorTransfer, replyQuote, transferResponse } from '../src/app.controller';
 
@@ -107,8 +106,6 @@ describe('Pain001 Messages', () => {
         resolve({ status: 200 });
       });
     });
-
-    responseSpy = jest.spyOn(server, 'handleResponse').mockImplementation(jest.fn());
   });
 
   describe('Handle Transaction', () => {
@@ -118,7 +115,7 @@ describe('Pain001 Messages', () => {
 
       const result = await monitorQuote(ctx as Context);
       expect(result.status).toEqual(200);
-      expect(responseSpy).toHaveBeenCalled();
+      expect(postSpy).toHaveBeenCalled();
     });
 
     it('should throw error with empty request body', async () => {
