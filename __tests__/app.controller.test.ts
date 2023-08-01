@@ -252,6 +252,20 @@ describe('Pacs002 Messages', () => {
       expect(result.status).toEqual(200);
     });
 
+    it('should handle non-ok response', async () => {
+      const status = 500; // Example value, code for 'Internal Server Error'
+      postSpy = jest.spyOn(axios, 'post').mockImplementation((url: string, data?: any) => {
+        return new Promise((resolve, reject) => {
+          resolve({ status });
+        });
+      });
+      const expectedReq = getMockRequest();
+      const ctx = { request: { body: expectedReq } };
+
+      const result = await transferResponse(ctx as Context);
+      expect(result.status).toEqual(status);
+    });
+
     it('should throw error with empty request body', async () => {
       const expectedReq = getMockEmptyRequest();
       const ctx = { request: { body: expectedReq } };
