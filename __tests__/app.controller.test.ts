@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from 'axios';
 import { Context } from 'koa';
-import { runServer } from '../src/server';
+import { runServer, server } from '../src/server';
+import * as startUpLib from '@frmscoe/frms-coe-startup-lib';
 import App from '../src/app';
 import { monitorQuote, monitorTransfer, replyQuote, transferResponse } from '../src/app.controller';
 
@@ -16,8 +16,6 @@ afterAll(async () => {
 });
 
 describe('Pain013 Messages', () => {
-  let postSpy: jest.SpyInstance;
-
   const getMockEmptyRequest = () => JSON.parse('{}');
 
   const getMockRequest = () =>
@@ -32,13 +30,7 @@ describe('Pain013 Messages', () => {
 
   const getEmptyCdtrPmtActvtnReqMockRequest = () => JSON.parse('{"TxTp":"pain.013.001.09","CdtrPmtActvtnReq": ""}');
 
-  beforeEach(() => {
-    postSpy = jest.spyOn(axios, 'post').mockImplementation((url: string, data?: any) => {
-      return new Promise((resolve, reject) => {
-        resolve({ status: 200 });
-      });
-    });
-  });
+  beforeEach(() => {});
 
   describe('Handle Transaction', () => {
     it('should handle successful Quote', async () => {
@@ -101,11 +93,7 @@ describe('Pain001 Messages', () => {
   const getEmptyCstmrCdtTrfInitnMockRequest = () => JSON.parse('{"TxTp":"pain.001.001.11","CstmrCdtTrfInitn": ""}');
 
   beforeEach(() => {
-    postSpy = jest.spyOn(axios, 'post').mockImplementation((url: string, data?: any) => {
-      return new Promise((resolve, reject) => {
-        resolve({ status: 200 });
-      });
-    });
+    responseSpy = jest.spyOn(server, 'handleResponse').mockImplementation(jest.fn());
   });
 
   describe('Handle Transaction', () => {
@@ -115,7 +103,7 @@ describe('Pain001 Messages', () => {
 
       const result = await monitorQuote(ctx as Context);
       expect(result.status).toEqual(200);
-      expect(postSpy).toHaveBeenCalled();
+      expect(responseSpy).toHaveBeenCalled();
     });
 
     it('should throw error with empty request body', async () => {
@@ -168,14 +156,6 @@ describe('Pacs008 Messages', () => {
 
   const getEmptyFIToFICstmrCdtMockRequest = () => JSON.parse('{"TxTp":"pacs.008.001.10","FIToFICstmrCdt": ""}');
 
-  beforeEach(() => {
-    postSpy = jest.spyOn(axios, 'post').mockImplementation((url: string, data?: any) => {
-      return new Promise((resolve, reject) => {
-        resolve({ status: 200 });
-      });
-    });
-  });
-
   describe('Handle Transaction', () => {
     it('should handle successful Transfer', async () => {
       const expectedReq = getMockRequest();
@@ -219,8 +199,6 @@ describe('Pacs008 Messages', () => {
 });
 
 describe('Pacs002 Messages', () => {
-  let postSpy: jest.SpyInstance;
-
   const getMockEmptyRequest = () => JSON.parse('{}');
 
   const getMockRequest = () =>
@@ -235,14 +213,6 @@ describe('Pacs002 Messages', () => {
 
   const getEmptyFIToFIPmtStsMockRequest = () => JSON.parse('{"TxTp":"pacs.002.001.12","FIToFIPmtSts":""}');
 
-  beforeEach(() => {
-    postSpy = jest.spyOn(axios, 'post').mockImplementation((url: string, data?: any) => {
-      return new Promise((resolve, reject) => {
-        resolve({ status: 200 });
-      });
-    });
-  });
-
   describe('Handle Transaction', () => {
     it('should handle successful Quote', async () => {
       const expectedReq = getMockRequest();
@@ -250,18 +220,6 @@ describe('Pacs002 Messages', () => {
 
       const result = await transferResponse(ctx as Context);
       expect(result.status).toEqual(200);
-    });
-
-    it('should handle non-ok response', async () => {
-      const status = 500; // Example value, code for 'Internal Server Error'
-      jest.spyOn(axios, 'post').mockImplementation((url: string, data?: any) => {
-        return Promise.resolve({ status });
-      });
-      const expectedReq = getMockRequest();
-      const ctx = { request: { body: expectedReq } };
-
-      const result = await transferResponse(ctx as Context);
-      expect(result.status).toEqual(status);
     });
 
     it('should throw error with empty request body', async () => {
