@@ -4,19 +4,12 @@ import { Pacs008V10Transaction } from './interfaces/iPacs008';
 import { Pain001V11Transaction } from './interfaces/iPain001';
 import { Pain01300109Transaction } from './interfaces/iPain013';
 import apm from 'elastic-apm-node';
-import { loggerService } from './server';
-import axios from 'axios';
-import { config } from './config';
+import { loggerService, server } from './server';
 
 const sendToDataPreparation = async (
   data: Pain001V11Transaction | Pain01300109Transaction | Pacs00200112V11Transaction | Pacs008V10Transaction,
-  path: string,
 ): Promise<void> => {
-  const resp = await axios.post(`${config.dataPreparationUrl}${path}`, data);
-
-  if (resp.status !== 200) {
-    loggerService.error(resp.data);
-  }
+  await server.handleResponse(data);
 };
 
 export const monitorQuote = async (ctx: Context): Promise<Context> => {
@@ -27,7 +20,7 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
     const transaction: Pain001V11Transaction = new Pain001V11Transaction(request);
 
     const spanToDataPrep = apm.startSpan('send.dataprep');
-    await sendToDataPreparation(transaction, '/execute');
+    await sendToDataPreparation(transaction);
     spanToDataPrep?.end();
 
     loggerService.log('Request sent to Data Preparation Service');
@@ -57,7 +50,7 @@ export const monitorTransfer = async (ctx: Context): Promise<Context> => {
 
     const spanToDataPrep = apm.startSpan('send.dataprep');
 
-    await sendToDataPreparation(transaction, '/transfer');
+    await sendToDataPreparation(transaction);
     spanToDataPrep?.end();
     loggerService.log('Pacs.008 Request sent to Data Preparation Service');
     ctx.status = 200;
@@ -84,7 +77,7 @@ export const replyQuote = async (ctx: Context): Promise<Context> => {
 
     const spanToDataPrep = apm.startSpan('send.dataprep');
 
-    await sendToDataPreparation(transaction, '/quoteReply');
+    await sendToDataPreparation(transaction);
     spanToDataPrep?.end();
     loggerService.log('Request sent to Data Preparation Service');
     ctx.status = 200;
@@ -111,7 +104,7 @@ export const transferResponse = async (ctx: Context): Promise<Context> => {
     const transaction: Pacs00200112V11Transaction = new Pacs00200112V11Transaction(request);
 
     const apmSpan = apm.startSpan('req.sendto.dataprep');
-    await sendToDataPreparation(transaction, '/transfer-response');
+    await sendToDataPreparation(transaction);
     apmSpan?.end();
     loggerService.log('Request sent to Data Preparation Service');
 
